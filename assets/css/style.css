@@ -1,5 +1,18 @@
 body{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('../images/mainbg.webp');
+}
+
+#main-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 5px solid blue;
+    text-align: center;
+}
+
+.logo {
+    
 }
 
 #hero-outer{
