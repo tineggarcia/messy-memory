@@ -1,14 +1,19 @@
+/*General style */
+    
 body{
+    margin: 0;
+    padding: 0;
+    
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: url('../images/mainbg.webp'); 
+    background: url('../images/mainbg.webp') no-repeat fixed center; 
 }
 
 .logo-flex {
-    border: 5px solid blue;
+    /*border: 5px solid blue;*/
     width: auto;
     height: 10rem;
     display: flex;
-    margin: auto;
+    margin: 0;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
