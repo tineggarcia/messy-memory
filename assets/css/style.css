@@ -29,6 +29,18 @@ body{
     background: url('../images/messyMemLogoNormal.png') no-repeat center center;
 }
 
+.game-container {
+    margin-top: 2rem;
+    margin-left: 5rem; 
+    margin-right: 5rem;
+    align-items: center;
+    width: 80%;
+    height: 500px;
+    border: 5px solid red;
+    background: url('../images/gameback.webp') no-repeat center center; 
+}
+
+
 #hero-outer{
     height: 70vh;
     width: 100vw;
