@@ -31,15 +31,27 @@ body{
 
 .game-container {
     margin-top: 2rem;
-    margin-left: 5rem; 
+    margin-left: 21rem; 
     margin-right: 5rem;
     align-items: center;
-    width: 80%;
-    height: 500px;
+    width: 50%;
+    height: 450px;
     border: 5px solid red;
-    background: url('../images/gameback.webp') no-repeat center center; 
+    background-image: url('../images/mariobackgrd.jpg'); 
+    background-size: cover;
+    background-position: left;
+    background-blend-mode: lighten;
+    opacity: .8;
 }
 
+.scores {
+    display: flex;
+}
+
+.cards-area {
+    display: grid;
+    
+}
 
 #hero-outer{
     height: 70vh;
