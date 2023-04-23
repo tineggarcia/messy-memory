@@ -4,9 +4,9 @@ The Messy Memory game is not your typical memory game. It is different from the 
 
 <a href="https://tineggarcia.github.io/messy-memory/index.html" target="_blank" rel="noopener">Messy Memory</a>
 
-![Bakin Frenzy responsive screenshot](readme-images/amiresponsive.png)
+![Messy Memory responsive screenshot](readme-images/amiresponsive.png)
 
-**[Live site](https://tineggarcia.github.io/baking-frenzy/index.html)**
+**[Live site](https://tineggarcia.github.io/messy-memory/index.html)**
 ------------------------------------------------------------------
 **[Repository](https://github.com/tineggarcia/messy-memory)**
 ------------------------------------------------------------------
@@ -52,6 +52,10 @@ The Messy Memory game is not your typical memory game. It is different from the 
 
 
 ## User Stories
+* As a user, upon loading of the website, he/she will be able to have a least a tiny bit of idea of what the game is all about. 
+* As a user, I want the website to be interesting and  inviting for me and will entice to start a new game. 
+* As a user, I want the website/game to be colourful and lively to look at to 
+
 
 * As a user I want to be able to straight away tell what is the website all about. 
 * As a user I want the website to be inviting and will entice me to explore the website more.
@@ -75,7 +79,8 @@ The Messy Memory game is not your typical memory game. It is different from the 
 
 ## Wireframes
 
-I have used [Balsamiq](https://balsamiq.com) wireframes for Baking Frenzy Cakes wireframes. 
+I have used [Balsamiq](https://balsamiq.com) wireframes for the Messy Memory wireframes. I have created wireframes both for desktop and mobile display. For a tablet, it would be more likely same as desktop only reduced in size. 
+
 The frame provided was designed under a deskptop on full display. Changes of appearance 
 for tablet and mobile is very minimal. Basically all the images will either just shift down 
 one under the other or just sit side by side. Normally were displayed 1 per page so user 
