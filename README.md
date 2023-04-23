@@ -116,8 +116,9 @@ WIREFRAME FOR MOBILE DEVICE
 
 ## Site Structure
 
-Baking Frenzy Cakes website has Four(4) main pages such as Home, Products, Gallery and Sign up. 
-The website initially loads the home page or landing page (index.html) which display a 
+The Messy Memory Game Website has a very straight forward and intutive design to ensure user's ease of use. The website contains 1 main page which the main page(index.html) where the game area is located.  
+
+The website initially loads the home page or landing page (index.html) which display a very vibrant, colourful Super Mario game 
 very nice hero image, a clear, vivid and mouth-watering image of cupcakes that is surely inviting
 to the users. The page also displays a clear welcome message and Baking Frenzy Cake's motto.
 From the Home page, navigation links on the upper right hand of the scree are always 
@@ -155,6 +156,8 @@ On some of my header text, I used them together side by side to create a modern 
   throughout the website.
 
 ![Colour Palate image](readme-images/colour-scheme.png)
+
+* ### Images/Stock photos
 
 [Back to top](<#contents>)
 
