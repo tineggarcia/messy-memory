@@ -87,7 +87,15 @@ one under the other or just sit side by side. Normally were displayed 1 per page
 can have a clear view. The initial plan/design drawn on wireframes was not 100% executed 
 during the development as some issues/complications was considered along the way. 
 
-![Desktop wireframe image](readme-images/wireframe.png)
+
+![Desktop wireframe image](readme-images/messymemoryWF1.png)
+
+
+![Desktop wireframe image](readme-images/messymemoryWF2.png)
+
+![Desktop wireframe image](readme-images/messymemoryWF3.png)
+
+
 
 [Back to top](<#contents>)
 
