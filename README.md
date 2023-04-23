@@ -87,14 +87,29 @@ one under the other or just sit side by side. Normally were displayed 1 per page
 can have a clear view. The initial plan/design drawn on wireframes was not 100% executed 
 during the development as some issues/complications was considered along the way. 
 
+WIREFRAME FOR DESKTOP
 
-![Desktop wireframe image](readme-images/messymemoryWF1.png)
+* Landing Page - This is the page that will be displayed upon loading of the website. It will show a pop-up window displaying the Instructions on how to play the game. A New Game button can be found at the bottom of the page, upon clicking on it, users will have to choose the preferred game difficulty that's displayed, choose from either Easy or Hard.  
+
+![Desktop wireframe image](/assets/readme-images/MessyMemoryWF1.png)
 
 
-![Desktop wireframe image](readme-images/messymemoryWF2.png)
+* New Game Page - Difficulty, Easy. This page will be loaded upon selecting the Easy (level) from the Landing page. With the Easy level, there will be only 4 cards/images to play with and users must beat the 8 seconds timer.  
 
-![Desktop wireframe image](readme-images/messymemoryWF3.png)
+![Desktop wireframe image](/assets/readme-images/MessyMemoryWF3.png)
 
+* New Game Page - Difficulty, Hard. This page will be loaded upon selecting the Hard (level) from the Landing page. With the Hard level, there will be 6 cards/images to play with and users must beat the 10 seconds timer.  
+
+![Desktop wireframe image](/assets/readme-images/MessyMemoryWF2.png)
+
+
+* Well done!
+
+* Sorry try again! 
+
+
+WIREFRAME FOR MOBILE DEVICE 
+![Mobile wireframe image](/assets/readme-images/MMWireframeMobile.webp)
 
 
 [Back to top](<#contents>)
