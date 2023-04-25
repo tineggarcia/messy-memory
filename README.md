@@ -41,39 +41,21 @@ The Messy Memory game is not your typical memory game. It is different from the 
 
 
 # User Experience (UX)
-
-
-
-* The main goal is to let the user test their Harry Potter knowledge.
-* The user should have good insight in the content when viewing the startpage.
-* The user should have an easy accesible button to start the quiz.
-* The user should receive direct feedback on wheter the answer is correct or not.
-* The user should have the possiblity to restart the quiz and try to improve.
-
-
 ## User Stories
-* As a user, upon loading of the website, he/she will be able to have a least a tiny bit of idea of what the game is all about. 
-* As a user, I want the website to be interesting and  inviting for me and will entice to start a new game. 
-* As a user, I want the website/game to be colourful and lively to look at to 
 
-
-* As a user I want to be able to straight away tell what is the website all about. 
-* As a user I want the website to be inviting and will entice me to explore the website more.
-* As a user I want to find what am I looking for through smooth and easy navigation.   
-* As a user I want to be satisfied with the amount of information I have acquired from the website  or meets my expectation.
-* As a user I want to understand the purpose of the website and what it has to offer upon loading it or just by few clicks. 
-* As a user I want to be able to see the available items that are available for the consumer in the website. 
-* As a user I want to enjoy navigating through the website and will keep my interest as I go through the site.
-* As a user I want to be inspired get some idea by the photo gallery provided in the site.
-* As a user I want the site to be able to help me in making my mind or pick the right one or at least choose a prospective one. 
-* As a user I want that in the event that I couldn't find what I'm looking for in site, there will be a way to let the site owner know.
-* As a user I want to be able to know the contact details and location of Baking Frenzy Cakes. 
-* As a user I want to see the items I am looking for quickly through selections available in the website to avoid going through the entire site.
-* As a user I want to see what people has to say about Baking Frenzy through the feedbacks or testimonials.
-* As a user I want to be able to let the site know that I want to get updated of promos and news through signing up toe their newsletter.
-* As a user I want to be able to have a quick link to see all the artists works and be inspired. 
-* As a user I want to be able to connect or find out more through social media links. 
-* As a user I want to be over-all satisfied with my experience with the website and will definitely be checking back again. 
+* The main goal is to test the users memory thru critical thinking and their ability to remember and recall information, and to make it challenging, a time limit is set.   
+* As a user, upon loading of the website, he/she will be able to have a least a tiny bit of idea of what the game is all about, that's the idea of the game being straight forward and intuitive. 
+* As a user, I want the website to be interesting and inviting for me and will entice to start a new game. 
+* As a user, I want the website/game to be colourful and lively to look at and includes a clear and nice images. 
+* As a user and a fan or aware of the popular Super Mario game, can relate to the theme, when it comes to colours, background, images and even texts. 
+* As a user, read a brief and simple description of the mechanics of the game. 
+* As a user,  should have easy access to a New button. 
+* As a user, be able to see the high scores recorded.
+* As a user, should know their current score on the game.
+* As a user should be able to get a feedback of the correct and incorrect answers. 
+* As a user, game must clearly indicate/show when the game has began.   
+* As a user, during the game, be able to know the time remaining to solve the game. 
+* As a user I want to be over-all satisfied with my experience with the game website  and will definitely be checking back again. 
 
 [Back to top](<#contents>)
 
@@ -87,6 +69,7 @@ one under the other or just sit side by side. Normally were displayed 1 per page
 can have a clear view. The initial plan/design drawn on wireframes was not 100% executed 
 during the development as some issues/complications was considered along the way. 
 
+
 WIREFRAME FOR DESKTOP
 
 * Landing Page - This is the page that will be displayed upon loading of the website. It will show a pop-up window displaying the Instructions on how to play the game. A New Game button can be found at the bottom of the page, upon clicking on it, users will have to choose the preferred game difficulty that's displayed, choose from either Easy or Hard.  
@@ -97,6 +80,7 @@ WIREFRAME FOR DESKTOP
 * New Game Page - Difficulty, Easy. This page will be loaded upon selecting the Easy (level) from the Landing page. With the Easy level, there will be only 4 cards/images to play with and users must beat the 8 seconds timer.  
 
 ![Desktop wireframe image](/assets/readme-images/MessyMemoryWF3.png)
+
 
 * New Game Page - Difficulty, Hard. This page will be loaded upon selecting the Hard (level) from the Landing page. With the Hard level, there will be 6 cards/images to play with and users must beat the 10 seconds timer.  
 
@@ -111,40 +95,28 @@ WIREFRAME FOR DESKTOP
 WIREFRAME FOR MOBILE DEVICE 
 ![Mobile wireframe image](/assets/readme-images/MMWireframeMobile.webp)
 
-
 [Back to top](<#contents>)
+
 
 ## Site Structure
 
-The Messy Memory Game Website has a very straight forward and intutive design to ensure user's ease of use. The website contains 1 main page which the main page(index.html) where the game area is located.  
+The Messy Memory Game Website has a very straightforward and intuitive design to ensure user's ease of use. The website contains 1 main page which is the main page(index.html) where the game area is located.  
 
-The website initially loads the home page or landing page (index.html) which display a very vibrant, colourful Super Mario game 
-very nice hero image, a clear, vivid and mouth-watering image of cupcakes that is surely inviting
-to the users. The page also displays a clear welcome message and Baking Frenzy Cake's motto.
-From the Home page, navigation links on the upper right hand of the scree are always 
-accessible and just a click away. Alongside the navigation links sits the Logo and Logo name
-which helps the user in ensure be reminded that they are definitely in the correct 
-website. At the bottom of the page, a footer is provided that contains all the social media 
-links. The Home page is also divided into three(3) sections. The Welcome section, About section, 
-and the Testimonials section. Details of each section will be discussed in the next sections.
+The website initially loads the home page or landing page (index.html) which opens up to a very vibrant, colourful Super Mario game background. Any Super Mario fanatic will definitely recognise the popular background even from afar and it will definitely entice them to explore the website more and get on the game. On top of the main page, the logo and name of the game website was placed. Underneath it, the scores and Instructions button is located, this button will open up a pop-up window that explains the mechanics of the game. From this window, users can start a New Game and set the difficulty desired. The main game area follows after the scores. The game area is where the cards/images are placed in a column of 2 and 2 rows for Easy difficulty, whereas Hard has 3 columns and 2 rows. Cards are shuffled randomly, after which the user can drag and drop the cards to their desired position. 
+
+A button New Game is provided at the bottom of the screen, which obviously restarts a new game. At the bottom of the page, the difficulty that was set by the user is displayed.  
 
 [Back to top](<#contents>)
+
 ## Design Choices
 
 * ### Typography
-    I have chosen the 2 fonts for the project, Montserrat and Lora. This font pair was suggested 
-by FontJoy website. Plus, I also would want to try out a new, artsy and modern look on fonts.
-On some of my header text, I used them together side by side to create a modern and unique look.
-  * 'Montserrat' is the primary font I used. I used it both in my headings and body texts. 
-        This font in my opinion provides a neat and clear look that I believe is essential in 
-        developing an effective and professional website. Montserrat might be thin but due to
-        its spacing, users can easily read it. Throughout my development I opted to change the 
-        text spacing by reducing the normal a bit to save space and provide a different look. 
-  * 'Lora' cursive, is used to provide contrast to the main font and I think provides 
-      a more feminine look which I believe suits well the site's colour 
-      scheme. I also decided to use it since cursive usually is used to highlight some significant 
-      content, to draw more attention to it. 
-    
+   I have chosen the 2 primary fonts for the project, Alef Orienta and Pathway Extreme. The Orienta font is used as header text (normal sized), whereas the Pathway Extreme for the normal (content) label. For some of the text, which needs to be enlarged in size like a big title, I have used the Alef. Plus, I have also used 1 more font but specifically for designing my logo
+
+I also would want to try out a new, artsy and modern look on fonts.On some of my header text, I used them together side by side to create a modern and unique look.  * 'Alef' is the primary font I used. I used it both in my headings and body texts.         This font in my opinion provides a neat and clear look that I believe is essential in         developing an effective and professional website. Montserrat might be thin but due to        its spacing, users can easily read it. Throughout my development I opted to change the         text spacing by reducing the normal a bit to save space and provide a different look. 
+  * 'Telex' cursive, is used to provide contrast to the main font and I think provides       a more feminine look which I believe suits well the site's colour       scheme. I also decided to use it since cursive usually is used to highlight some significant       content, to draw more attention to it. * Specifically for the logo, I have used a customised Super Mario 265 font from the Dafonts. This has a very close likeness to the original Super Mario Bros. game font. I have observed that this font is being used by many designers in their websites that is related to Super Mario game.      
+
+
   * ### Colour Scheme
       I have chosen the following colour scheme various shades of pink and red as I think 
   most of the time cakes are associated with pink, as cakes normally adored (not only consumed)
@@ -306,12 +278,20 @@ would be a good addition
 [Back to top](<#contents>)
 
 # Technologies Used
-* [HTML5](https://html.spec.whatwg.org/) - provides the content and structure for the website.
-* [CSS](https://www.w3.org/Style/CSS/Overview.en.html) - provides the styling and layout for the HTML pages.
-* [Balsamiq](https://balsamiq.com/wireframes/) - used to create the wireframes.
-* [Gitpod](https://www.gitpod.io/#get-started) - used to deploy the website.
-* [Github](https://github.com/) - used to host and edit the website.
 
+* Javascript 
+
+* Framework Bootstrap 
+
+* [HTML5](https://html.spec.whatwg.org/) - provides the content and structure for the website.
+
+* [CSS](https://www.w3.org/Style/CSS/Overview.en.html) - provides the styling and layout for the HTML pages.
+
+* [Balsamiq](https://balsamiq.com/wireframes/) - used to create the wireframes.
+
+* [Gitpod](https://www.gitpod.io/#get-started) - used to deploy the website.
+
+* [Github](https://github.com/) - used to host and edit the website.
 [Back to top](<#contents>)
 
 # Testing
@@ -385,7 +365,8 @@ feedback across various devices.
 
 
 # Acknowledgements
-The site was completed as a Portfolio 1 Project piece for the Full 
+
+The site was completed as a Portfolio 2 Project piece for the Full 
 Stack Software Developer (e-Commerce) Diploma at the 
 [Code Institute](https://codeinstitute.net/). As such I would like to thank 
 my mentor [Precious Ijege](https://www.linkedin.com/in/precious-ijege-908a00168/),
