@@ -3,69 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name=“description” content='Messy Memory, a different kind of memory game, memorise cards and position'>
     <meta name="keywords" content="Memory game, mario memoery game">
-    
+
     <!--Fontawesome and Google Fonts link -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Raleway%7CRighteous" rel="stylesheet">
     <!---->
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Messy Memory Game</title>
-
 </head>
 <body>
-    <h1></h1>
-    <!--Header Logo-->
-    <div class="logo-flex">
-        <img class="logo"></img> 
-    </div>
-
-    <!--Floating background for the game-->
-    <div class="game-container">
-    
-        <!--Scores and Instructions-->
-        <div class="scores">
-            <h3>Hi-score</h3>
-            <h3>Your score</h3>
-            <h3>Hi-score</h3>
-        </div>
-
-    <!--Game area- cards/images area-->
-    <!--Must check the game difficulty first-->
-    <!--If Easy Level cards are only 4, Hard level 6 cards-->
-
-        <!--EASY Level starts here-->
-        <div class="cards-area">
-            <!--First Row of Cards Area-->
-            <div class="about-card about-us-texts">
-                <br>                
-            </div>
-                                
-            <div class="about-card">
-            
-            </div>  
-                            
-            <!--2nd Row-->  
-            <div></div>
-                <div class="about-card about-us-texts">
-            </div>
-
-    <!--Game area- cards/images area-->
-    
-    <div>
-
-    </div>
-
-    <!--Difficulty buttons-->
-    <div>
-
-    </div>
+<h1></h1>
+<!--Header Logo-->
+<div class="logo-flex">
+    <img class="logo"></img>
 </div>
 
-    
-    <script src="assets/js/script.js"></script>
+<!--Floating background for the game-->
+<div class="game-container">
+
+    <!--Scores and Timer-->
+    <div class="scores">
+        <div class="high-score"><h3>Hi-score:</h3></div>
+        <div class="timer"><h3>Timer:</h3></div>
+        <div class="user-score"><h3>Score:</h3></div>
+    </div>
+
+    <div id="easy_level"  class="container">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+
+                <div class="row easy_drop_div">
+                    <div id="div_easy_image1" class="col-md-6 img_container easy">
+                        <img id="easy_image1" class="img-thumbnail mx-auto d-block" draggable="true" alt="1" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                    </div>
+                    <div id="div_easy_image2" class="col-md-6 img_container easy">
+                        <img id="easy_image2" class="img-thumbnail mx-auto d-block" draggable="true" alt="2" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                    </div>
+                </div>
+                <div class="row easy_drop_div">
+                    <div id="div_easy_image3" class="col-md-6 img_container easy">
+                        <img id="easy_image3" class="img-thumbnail mx-auto d-block" draggable="true" alt="3" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                    </div>
+                    <div id="div_easy_image4" class="col-md-6 img_container easy">
+                        <img id="easy_image4" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+
+    <div id="hard_level" class="container">
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
+                <div class="row hard_drop_div">
+                    <div id="div_hard_image1" class="col-sm-4 img_container hard">
+                        <img id="hard_image1" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                    </div>
+                    <div id="div_hard_image2" class="col-sm-4 img_container hard">
+                        <img id="hard_image2" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                    </div>
+                    <div id="div_hard_image3" class="col-sm-4 img_container hard">
+                        <img id="hard_image3" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                    </div>
+                </div>
+                <div class="row hard_drop_div">
+                    <div id="div_hard_image4" class="col-sm-4 img_container hard">
+                        <img id="hard_image4" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                    </div>
+                    <div id="div_hard_image5" class="col-sm-4 img_container hard">
+                        <img id="hard_image5" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                    </div>
+                    <div id="div_hard_image6" class="col-sm-4 img_container hard">
+                        <img id="hard_image6" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+    </div>
+    <!--    </div>-->
+
+    <!--EASY Level starts here-->
+    <div class="cards-area">
+        <!--First Row of Cards Area-->
+        <div class="about-card about-us-texts">
+            <br>
+        </div>
+
+        <div class="about-card">
+
+        </div>
+
+        <!--2nd Row-->
+        <div></div>
+        <div class="about-card about-us-texts">
+        </div>
+    </div>
+</div>
+<script src="assets/js/script.js"></script>
 </body>
 </html>

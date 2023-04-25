@@ -66,3 +66,42 @@ body{
  background-image: url('../assets/images/mainbg.webp') no-repeat center center;   
  background-size: cover;
 }
+
+.easy_drop_div {
+    height: 12vw;
+    width: 26vw;
+}
+
+.hard_drop_div {
+    height: 12vw;
+    width: 39vw;
+}
+
+.img_container {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border-radius: 15px;
+    border: #00aa88;
+    border-style: groove;
+    text-align: center;
+    margin: 0vw 1vw 0vw 1vw;
+    padding-top: 1vw;
+}
+
+.hard {
+     width: 11vw;
+     height: 11vw;
+}
+.easy {
+      width: 11vw;
+      height: 11vw;
+}
+
+.easy>img {
+    max-height: 100%;
+}
+
+.hard>img {
+    max-height: 100%;
+}
