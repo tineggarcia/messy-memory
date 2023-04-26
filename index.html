@@ -14,10 +14,12 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Messy Memory Game</title>
     <script>
+
+
         let array = [1, 2, 3, 4, 5, 6];
         let shuffledArray = array.sort((a, b) => 0.5 - Math.random());
 
-        sessionStorage.setItem('game_level', 'easy');
+        // sessionStorage.setItem('game_level', 'easy');
 
         var game_level = sessionStorage.getItem('game_level');
         var easy_level_highscore = localStorage.getItem('easy_level_highscore');
@@ -25,6 +27,7 @@
         var expert_level_highscore = localStorage.getItem('expert_level_highscore');
         var easy_level_completed = localStorage.getItem('easy_level_completed')=="Y";
         var hard_level_completed = localStorage.getItem('hard_level_completed')=="Y";
+        var expert_level_unlocked = localStorage.getItem('expert_level_unlocked')=="Y";
 
         var high_score = 0;
 
@@ -49,6 +52,12 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
+            if (expert_level_unlocked) {
+                let expert_buttons = document.querySelectorAll(".expert_button");
+                for (let expert_button of expert_buttons) {
+                    expert_button.style.display="block";
+                }
+            }
             if (game_level=="easy") {
                 document.getElementById("easy_level").style.display = "block";
                 document.getElementById("hard_level").style.display = "none";
@@ -61,7 +70,7 @@
                 document.getElementById("expert_level").style.display = "none";
                 array = [1, 2, 3, 4,5,6];
                 sessionStorage.setItem('high_score', hard_level_highscore);
-            } else if (game_level=="expert") {
+            } else if (game_level=="expert" && expert_level_unlocked) {
                 document.getElementById("easy_level").style.display = "none";
                 document.getElementById("hard_level").style.display = "none";
                 array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -78,6 +87,7 @@
                 imgElem.src = "assets/images/image" + shuffledArray[i] + ".webp";
             }
 
+            document.getElementById("game_level").innerHTML="Game Mode:" + game_level.toUpperCase();
             document.getElementById("high_score").innerHTML="High Score:" + high_score;
         });
 
@@ -95,6 +105,11 @@
                 document.getElementById("timeleft").innerHTML = "Starting in.." + (countTimer+3);
             }
             if (countTimer==-2) {
+                var images = document.querySelectorAll(".img_container>img");
+                for (let image of images) {
+                    image.draggable = true;
+                }
+
                 document.getElementById("instruction_box").innerHTML = "Put them back to original position!";
                 document.getElementById("timeleft").innerHTML = "Time left:" + (countTimer + 12);
             }
@@ -103,6 +118,11 @@
             }
             if (countTimer <=-12) {
                 clearInterval(gametimer);
+
+                var images = document.querySelectorAll(".img_container>img");
+                for (let image of images) {
+                    image.draggable = false;
+                }
                 let myscore = checkOk();
                 document.getElementById("instruction_box").innerHTML = "Time's up! Your score is " + myscore;
                 document.getElementById("timeleft").innerHTML = "Well Done!!!";
@@ -160,30 +180,19 @@
                 }
             }
 
-            if (correctAnswer>high_score) {
+            if (correctAnswer>=high_score) {
                 alert("Wow! You got the highest score " + correctAnswer + " for " + game_level + "level!!!")
                 setHighScore(correctAnswer);
-                let wwidth = window.innerWidth;
-                let wheight = window.innerHeight;
-                alert(wwidth + " x " + wheight);
-                if (hard_level_completed && easy_level_completed) {
-                    localStorage.setItem('expert_level_unlocked', "Y");
-                    if (window.innerWidth>1024) {
-                        alert("You unlocked the hidden expert level!!!");
-                        localStorage.setItem('expert_level_unlocked', "Y");
-                    }
-                }
-
             }
 
             if (check) {
-                alert("Wowwowwie! You got a perfect score!!! Resetting high score back to zero...");
+                // alert("Wowwowwie! You got a perfect score!!! Resetting high score back to zero...");
                 localStorage.setItem(game_level + "_level_completed","Y");
                 setHighScore(0);
                 let enabled = checkIfExpertEnabled();
                 if (enabled) {
                     if (localStorage.getItem('expert_level_unlocked') != "Y") {
-                        alert("You unlocked the hidden expert level!!! (1024x screen & up only!");
+                        // alert("You unlocked the hidden expert level!!! (1024x screen & up only!");
                         localStorage.setItem('expert_level_unlocked', "Y");
                         setGameLevel("expert");
                     }
@@ -194,7 +203,7 @@
         }
 
         function setHighScore(score){
-            if (score > high_score) {
+            if (score >= high_score) {
                 high_score = score;
                 localStorage.setItem(game_level + "_level_highscore", high_score);
                 document.getElementById("high_score").innerHTML="High Score:" + high_score;
@@ -221,210 +230,175 @@
             }
             return enabled;
         }
+        function clearLocalStorage() {
+            localStorage.removeItem('easy_level_highscore');
+            localStorage.removeItem('hard_level_highscore');
+            localStorage.removeItem('expert_level_highscore');
+            localStorage.removeItem('easy_level_completed');
+            localStorage.removeItem('hard_level_completed');
+            localStorage.removeItem('expert_level_unlocked');
+        }
 
+        function clearSessionStorage() {
+            sessionStorage.removeItem('game_level');
+            sessionStorage.removeItem('high_score');
+        }
+
+        function clearStorage() {
+            clearSessionStorage();
+            clearLocalStorage();
+        }
+
+        function showInfo(){
+            // alert("To play, wait for timer to finish. Drag images to their original position. Score will be based on total number of images in their original position");
+        }
 
     </script>
 </head>
 <body>
-<div class="container">
+<div class="container-sm">
     <div class="row">
-        <div class="col-2">
+        <div class="col-1 col-s-1 col-lg-1">
         </div>
-        <div class="col-8 border">
+        <div class="col-10 col-s-1 col0-lg-10">
 
             <!--Floating background for the game-->
-            <div class="container">
+            <div class="container-sm">
                 <div class="row">
-                    <div class="col-12 border">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="logo">
-                                    <img src="assets/images/messymemlogobrown.webp"></img>
+                    <div class="col-12">
+                        <div class="logo">
+                            <img src="assets/images/messymemlogobrown.webp"></img>
+                        </div>
+                        <div class="score-container">
+                            <div class="container-sm">
+                                <div class="row">
+                                    <div class="col-8"><h4 id="game_level"></h4></div>
+                                    <div class="col-4"><h3 id="high_score" class="bg-info  text-white"></h3></div>
                                 </div>
-                                <div class="score-container">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-4"><h3 id="high_score" class="bg-info  text-white"></h3></div>
-                                            <div class="col-4"><h3 id="your_score"></h3></div>
-                                            <div class="col-4"><button class="instruction_button" value="Instructions" onclick="alert('Drag and drop images to original postition!!!');"/></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="game-container">
-                                    <div id="easy_level" class="container">
-                                        <div class="row">
-                                            <div class="col-8 border">
-
-                                                <div class="row easy_drop_div">
-                                                    <div id="div_easy_image1" class="col-6 img_container easy">
-                                                        <img id="easy_image1" class="img-thumbnail mx-auto d-block" draggable="true" alt="1" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                    <div id="div_easy_image2" class="col-6 img_container easy">
-                                                        <img id="easy_image2" class="img-thumbnail mx-auto d-block" draggable="true" alt="2" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row easy_drop_div">
-                                                    <div id="div_easy_image3" class="col-6 img_container easy">
-                                                        <img id="easy_image3" class="img-thumbnail mx-auto d-block" draggable="true" alt="3" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                    <div id="div_easy_image4" class="col-6 img_container easy">
-                                                        <img id="easy_image4" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="container">
-                                                    <div class="action_button card bg-info text-white">
-                                                        <div class="card-body">Instructions</div>
-                                                    </div>
-                                                    <br>
-                                                    <br>
-                                                    <div class="action_button card bg-primary text-white">
-                                                        <div class="card-body easy_button">Easy</div>
-                                                    </div>
-                                                    <br>
-                                                    <br>
-                                                    <div class="action_button card bg-success text-white">
-                                                        <div class="card-body hard_button">Hard</div>
-                                                    </div>
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="hard_level" class="container">
-                                        <div class="row">
-                                            <div class="col-8 border">
-                                                <div class="row hard_drop_div">
-                                                    <div id="div_hard_image1" class="col-4 img_container hard">
-                                                        <img id="hard_image1" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                    <div id="div_hard_image2" class="col-4 img_container hard">
-                                                        <img id="hard_image2" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                    <div id="div_hard_image3" class="col-4 img_container hard">
-                                                        <img id="hard_image3" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                </div>
-                                                <div class="row hard_drop_div">
-                                                    <div id="div_hard_image4" class="col-4 img_container hard">
-                                                        <img id="hard_image4" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                    <div id="div_hard_image5" class="col-4 img_container hard">
-                                                        <img id="hard_image5" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                    <div id="div_hard_image6" class="col-4 img_container hard">
-                                                        <img id="hard_image6" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="container">
-                                                    <div class="action_button card bg-info text-white">
-                                                        <div class="card-body">Info card</div>
-                                                    </div>
-                                                    <br>
-                                                    <br>
-                                                    <div class="action_button card bg-primary text-white">
-                                                        <div class="card-body">Primary card</div>
-                                                    </div>
-                                                    <br>
-                                                    <br>
-                                                    <div class="action_button card bg-success text-white">
-                                                        <div class="card-body">Success card</div>
-                                                    </div>
-                                                    <br>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="expert_level" class="container">
-                                        <div class="row">
-                                            <div class="col-8">
-                                                <div class="row expert_drop_div">
-                                                    <div id="div_expert_image1" class="col-4 img_container expert">
-                                                        <img id="expert_image1" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                    <div id="div_expert_image2" class="col-4 img_container expert">
-                                                        <img id="expert_image2" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                    <div id="div_expert_image3" class="col-4 img_container expert">
-                                                        <img id="expert_image3" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                </div>
-                                                <div class="row expert_drop_div">
-                                                    <div id="div_expert_image4" class="col-4 img_container expert">
-                                                        <img id="expert_image4" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                    <div id="div_expert_image5" class="col-4 img_container expert">
-                                                        <img id="expert_image5" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                    <div id="div_expert_image6" class="col-4 img_container expert">
-                                                        <img id="expert_image6" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                </div>
-                                                <div class="row expert_drop_div">
-                                                    <div id="div_expert_image7" class="col-4 img_container expert">
-                                                        <img id="expert_image7" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                    <div id="div_expert_image8" class="col-4 img_container expert">
-                                                        <img id="expert_image8" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                    <div id="div_expert_image9" class="col-4 img_container expert">
-                                                        <img id="expert_image9" class="img-thumbnail mx-auto d-block" draggable="true" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="container">
-                                                    <div class="action_button card bg-info text-white">
-                                                        <div class="card-body">Info card</div>
-                                                    </div>
-                                                    <br>
-                                                    <br>
-                                                    <div class="action_button card bg-primary text-white">
-                                                        <div class="card-body">Primary card</div>
-                                                    </div>
-                                                    <br>
-                                                    <br>
-                                                    <div class="action_button card bg-success text-white">
-                                                        <div class="card-body">Success card</div>
-                                                    </div>
-                                                    <br>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="score-container">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-9 "><h3 id="instruction_box" class="bg-info text-success">Remember the cards and their position!</h3></div>
-                                            <div class="col-3"><h3 id="timeleft" class="bg-info text-warning"></h3></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!--                                <div class="mt-1 p-2 bg-gray text-red text-center">-->
-                                <!--                                    <span>-->
-                                <!--                                        <h3 id="instruction_box">Remember the cards and their position!</h3>-->
-                                <!--                                        <p class="h2" id="timeleft"></p>-->
-                                <!--                                    </span>-->
-                                <!--                                </div>-->
                             </div>
                         </div>
+                        <div class="game-container">
+                            <div class="container">
+                                <div class="row">
+                                    <div id="easy_level" class="col-8" >
+                                        <div class="row easy_drop_div">
+                                            <div id="div_easy_image1" class="col-6 img_container easy">
+                                                <img id="easy_image1" class="img-thumbnail mx-auto d-block" draggable="false" alt="1" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_easy_image2" class="col-6 img_container easy">
+                                                <img id="easy_image2" class="img-thumbnail mx-auto d-block" draggable="false" alt="2" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="row easy_drop_div">
+                                            <div id="div_easy_image3" class="col-6 img_container easy">
+                                                <img id="easy_image3" class="img-thumbnail mx-auto d-block" draggable="false" alt="3" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_easy_image4" class="col-6 img_container easy">
+                                                <img id="easy_image4" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="hard_level" class="col-8">
+                                        <div class="row hard_drop_div">
+                                            <div id="div_hard_image1" class="col-4 img_container hard">
+                                                <img id="hard_image1" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_hard_image2" class="col-4 img_container hard">
+                                                <img id="hard_image2" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_hard_image3" class="col-4 img_container hard">
+                                                <img id="hard_image3" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                        </div>
+                                        <div class="row hard_drop_div">
+                                            <div id="div_hard_image4" class="col-4 img_container hard">
+                                                <img id="hard_image4" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_hard_image5" class="col-4 img_container hard">
+                                                <img id="hard_image5" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_hard_image6" class="col-4 img_container hard">
+                                                <img id="hard_image6" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div id="expert_level" class="col-8">
+                                        <div class="row expert_drop_div">
+                                            <div id="div_expert_image1" class="col-4 img_container expert">
+                                                <img id="expert_image1" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_expert_image2" class="col-4 img_container expert">
+                                                <img id="expert_image2" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_expert_image3" class="col-4 img_container expert">
+                                                <img id="expert_image3" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                        </div>
+                                        <div class="row expert_drop_div">
+                                            <div id="div_expert_image4" class="col-4 img_container expert">
+                                                <img id="expert_image4" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_expert_image5" class="col-4 img_container expert">
+                                                <img id="expert_image5" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_expert_image6" class="col-4 img_container expert">
+                                                <img id="expert_image6" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                        </div>
+                                        <div class="row expert_drop_div">
+                                            <div id="div_expert_image7" class="col-4 img_container expert">
+                                                <img id="expert_image7" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_expert_image8" class="col-4 img_container expert">
+                                                <img id="expert_image8" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_expert_image9" class="col-4 img_container expert">
+                                                <img id="expert_image9" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 admin-container">
+                                        <div class="container">
+                                            <div class="action_button button_container bg-info text-white">
+                                                <div class="card-body" onclick="showInfo();">Info</div>
+                                            </div>
+                                            <div class="action_button button_container bg-primary text-white">
+                                                <div class="card-body easy_button" onclick="setGameLevel('easy')">Easy</div>
+                                            </div>
+                                            <div class="action_button button_container bg-success text-white">
+                                                <div class="card-body hard_button" onclick="setGameLevel('hard');">Hard</div>
+                                            </div>
+                                            <div class="expert_button action_button button_container bg-success text-white">
+                                                <div class="card-body hard_button" onclick="setGameLevel('expert');">Expert</div>
+                                            </div>
+                                            <div class="action_button button_container bg-danger text-white">
+                                                <div class="card-body" onclick="clearStorage();setGameLevel('easy');">Reset</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="score-container">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-9 "><h3 id="instruction_box" class="bg-info text-success">Remember the cards and their position!</h3></div>
+                                    <div class="col-3"><h3 id="timeleft" class="bg-info text-warning"></h3></div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-2">
-        </div>
     </div>
+    <div class="col-1 col-s-1 col-lg-1">
+    </div>
+</div>
+</div>
 </div>
 
 
