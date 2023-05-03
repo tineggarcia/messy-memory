@@ -23,13 +23,54 @@
         let shuffledArray = array.sort((a, b) => 0.5 - Math.random());
 
         var game_level="expert";
+
         function initGame() {
             clearImageDivs();
+        }
 
-            // high_score=sessionStorage.getItem("high_score");
-            // document.getElementById("game_level").innerHTML="Game Mode:" + game_level.toUpperCase();
-            // document.getElementById("high_score").innerHTML="High Score:" + high_score;
+        function attachEventListeners() {
+            var images = document.querySelectorAll(".img_container>img");
+            for (let image of images) {
+                image.draggable = true;
 
+                image.addEventListener('touchstart', function(e){
+                });
+
+                image.addEventListener('touchmove', function(e) {
+                    // grab the location of touch
+                    var touchLocation = e.targetTouches[0];
+
+                    // assign box new coordinates based on the touch.
+                    image.style.left = touchLocation.pageX + 'px';
+                    image.style.top = touchLocation.pageY + 'px';
+                })
+
+                /* record the position of the touch
+                when released using touchend event.
+                This will be the drop position. */
+
+                image.addEventListener('touchend', function(e) {
+                    // current box position.
+                    var x = parseInt(image.style.left);
+                    var y = parseInt(image.style.top);
+
+                    var endTarget = document.elementFromPoint(x, y);
+                    if (endTarget.id.startsWith("expert_image")) {
+                        swapParent(e.target,endTarget);
+                    }
+                })
+
+            }
+
+        }
+        function removeEventListeners() {
+            var images = document.querySelectorAll(".img_container>img");
+            for (let image of images) {
+                image.draggable = false;
+                image.removeEventListener('touchstart', function(e){});
+                image.removeEventListener('touchmove', function(e){});
+                image.removeEventListener('touchend', function(e){});
+            }
         }
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -78,40 +119,7 @@
                     // document.getElementById("timeleft").innerHTML = "Starting in.." + (countTimer+3);
                 }
                 if (countTimer==-2) {
-                    var images = document.querySelectorAll(".img_container>img");
-                    for (let image of images) {
-                        image.draggable = true;
-
-                        image.addEventListener('touchstart', function(e){
-                            console.log('btn touched: ' + e.target.id);
-                        });
-
-                        image.addEventListener('touchmove', function(e) {
-                            // grab the location of touch
-                            var touchLocation = e.targetTouches[0];
-
-                            // assign box new coordinates based on the touch.
-                            image.style.left = touchLocation.pageX + 'px';
-                            image.style.top = touchLocation.pageY + 'px';
-                        })
-
-                        /* record the position of the touch
-                        when released using touchend event.
-                        This will be the drop position. */
-
-                        image.addEventListener('touchend', function(e) {
-                            // current box position.
-                            var x = parseInt(image.style.left);
-                            var y = parseInt(image.style.top);
-
-                            var endTarget = document.elementFromPoint(x, y);
-                            if (endTarget.id.startsWith("expert_image")) {
-                                swapParent(e.target,endTarget);
-                            }
-                        })
-
-                    }
-
+                    attachEventListeners();
                     // document.getElementById("instruction_box").innerHTML = "Put them back to original position!";
                     // document.getElementById("timeleft").innerHTML = "Time left:" + (countTimer + 12);
                 }
@@ -121,10 +129,7 @@
                 if (countTimer <-12) {
                     clearInterval(gametimer);
 
-                    var images = document.querySelectorAll(".img_container>img");
-                    for (let image of images) {
-                        image.draggable = false;
-                    }
+                    removeEventListeners();
                     let myscore = checkOk();
                     // document.getElementById("instruction_box").innerHTML = "Time's up! Your score is " + myscore;
                     // document.getElementById("timeleft").innerHTML = "Well Done!!!";
@@ -188,27 +193,25 @@
             var images = parentElement.querySelectorAll("img");
 
             for (let image of images) {
-                let checkInterval = setInterval(function() {
-                    if (!(image.parentElement.id.endsWith(image.id))) {
-                        check=false;
-                    } else {
-                        correctAnswer++;
-                        image.src = image.src.replace("images/image","images/ok_image");
-                    }
-                },1000);
+                if (!(image.parentElement.id.endsWith(image.id))) {
+                    check=false;
+                } else {
+                    correctAnswer++;
+                    image.src = image.src.replace("images/image","images/ok_image");
+                }
             }
 
             if (check) {
                 // //alert("Wowwowwie! You got a perfect score!!! Resetting high score back to zero...");
                 modalDetails=["Wowwowwie!!!","You got a perfect score!!! Resetting high score back to zero.."];
                 localStorage.setItem(game_level + "_level_completed","Y");
-                setHighScore(0);
+                // setHighScore(0);
             } else {
                 modalDetails=["Well Done!!!","Your score is " + correctAnswer];
 
-                if (correctAnswer>=high_score) {
-                    // setHighScore(correctAnswer);
-                }
+                // if (correctAnswer>=high_score) {
+                //     // setHighScore(correctAnswer);
+                // }
 
             }
             landingModal.show();
@@ -271,16 +274,25 @@
                     </div>
 
                     <div class="col-12 col-lg-10 col-xl-8">
-                        <div class="logo">
-                            <img src="assets/images/messymemlogobrown.webp"></img>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-2">
+                                </div>
+                                <div class="col-8">
+                                    <img class="img-thumbnail mx-auto d-block" src="assets/images/messymemlogobrown.webp"></img>
+                                </div>
+                                <div class="col-2">
+                                </div>
+                            </div>
                         </div>
+
                         <div class="game-container">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-lg-1">
                                     </div>
 
-                                    <div id="expert_level " class="col-12 col-md-12 col-lg-10">
+                                    <div id="expert_level" class="col-12 col-md-12 col-lg-10">
                                         <div class="row expert_drop_div">
                                             <div id="div_expert_image1" class="col-4 img_container expert">
                                                 <img id="expert_image1" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
