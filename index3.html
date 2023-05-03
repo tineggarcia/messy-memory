@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name=“description” content='Messy Memory, a different kind of memory game, memorise cards and position'>
+    <meta name="keywords" content="Memory game, mario memoery game">
+
+    <!--Fontawesome and Google Fonts link -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Raleway%7CRighteous" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="assets/css/style3.css">
+    <title>Messy Memory Game</title>
+    <script>
+        var myModal;
+        var firstLand = true;
+        let modalDetails = ["How to play","To play, wait for timer to finish. Drag images to their original position. Score will be based on total number of images in their original position!"];
+
+        let array = [1, 2, 3, 4, 5, 6,7,8,9];
+        let shuffledArray = array.sort((a, b) => 0.5 - Math.random());
+
+        let game_level="expert";
+        function initGame() {
+            clearImageDivs();
+
+            // high_score=sessionStorage.getItem("high_score");
+            // document.getElementById("game_level").innerHTML="Game Mode:" + game_level.toUpperCase();
+            // document.getElementById("high_score").innerHTML="High Score:" + high_score;
+
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            initGame();
+
+            myModal = document.getElementById('myModal')
+            myModal.addEventListener('show.bs.modal', function (event) {
+                var title = modalDetails[0];
+                var modalMessage = modalDetails[1];
+
+                var modalTitle = myModal.querySelector('.modal-title');
+                var modalBodyInput = myModal.querySelector('.modal-body');
+
+                modalTitle.textContent = title;
+                modalBodyInput.textContent = modalMessage;
+            })
+
+            if (firstLand) {
+                firstLand=false;
+                landingModal = new bootstrap.Modal(document.getElementById('myModal'), {});
+                landingModal.show();
+            }
+
+        });
+
+        function startGame() {
+            shuffledArray = array.sort((a, b) => 0.5 - Math.random());
+
+            for (let i=0; i<shuffledArray.length; i++) {
+                let imgElem = document.getElementById(game_level + "_image"+ (i+1));
+                imgElem.src = "assets/images/image" + shuffledArray[i] + ".webp";
+            }
+
+            var countTimer = 10;
+
+            // Update the count down every 1 second
+            var gametimer = setInterval(function() {
+
+                // If the count down is over, write some text
+                if (countTimer>=0) {
+                    // document.getElementById("timeleft").innerHTML = countTimer;
+                }
+                if (countTimer <= 0 && countTimer>-2) {
+                    shuffleImageDivs();
+                    // document.getElementById("timeleft").innerHTML = "Starting in.." + (countTimer+3);
+                }
+                if (countTimer==-2) {
+                    var images = document.querySelectorAll(".img_container>img");
+                    for (let image of images) {
+                        image.draggable = true;
+                    }
+
+                    // document.getElementById("instruction_box").innerHTML = "Put them back to original position!";
+                    // document.getElementById("timeleft").innerHTML = "Time left:" + (countTimer + 12);
+                }
+                if (countTimer <=-2) {
+                    // document.getElementById("timeleft").innerHTML = "Time left:" + (countTimer + 12);
+                }
+                if (countTimer <-12) {
+                    clearInterval(gametimer);
+
+                    var images = document.querySelectorAll(".img_container>img");
+                    for (let image of images) {
+                        image.draggable = false;
+                    }
+                    let myscore = checkOk();
+                    // document.getElementById("instruction_box").innerHTML = "Time's up! Your score is " + myscore;
+                    // document.getElementById("timeleft").innerHTML = "Well Done!!!";
+                }
+
+                countTimer--;
+            }, 1000);
+        }
+
+
+        function shuffleImageDivs() {
+            let reshuffleArray = array.sort((a, b) => 0.5 - Math.random());
+            for (let i=0;i<array.length;i++) {
+                let image_div = document.getElementById("div_" + game_level + "_image"+(i+1));
+                image_div.appendChild(document.getElementById("div_" + game_level + "_image" + (reshuffleArray[i])).firstElementChild);
+            }
+        }
+
+        function clearImageDivs() {
+
+            for (let i=0; i<array.length; i++) {
+                let imgElem = document.getElementById(game_level + "_image"+ (i+1));
+                imgElem.src = "assets/images/mario.webp";
+            }
+
+            // let image_divs = document.querySelectorAll(".img_container");
+            // for (let image_div of image_divs) {
+            //     image_div.style.backgroundImage = "url('assets/images/mario.webp')";
+            // }
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+            ev.dataTransfer.setData("parent",ev.target.parentElement.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            var sourceDiv=document.getElementById(ev.dataTransfer.getData("parent"));
+            ev.target.parentElement.appendChild(document.getElementById(data));
+            sourceDiv.appendChild(ev.target);
+        }
+
+        function checkOk() {
+            var correctAnswer = 0;
+            var check=true;
+
+            const parentElement = document.querySelector("#" + game_level + "_level");
+            var images = parentElement.querySelectorAll("img");
+
+            for (let image of images) {
+                let checkInterval = setInterval(function() {
+                    if (!(image.parentElement.id.endsWith(image.id))) {
+                        check=false;
+                    } else {
+                        correctAnswer++;
+                        image.src = image.src.replace("images/image","images/ok_image");
+                    }
+                },1000);
+            }
+
+            if (check) {
+                // //alert("Wowwowwie! You got a perfect score!!! Resetting high score back to zero...");
+                modalDetails=["Wowwowwie!!!","You got a perfect score!!! Resetting high score back to zero.."];
+                localStorage.setItem(game_level + "_level_completed","Y");
+                setHighScore(0);
+            } else {
+                modalDetails=["Well Done!!!","Your score is " + correctAnswer];
+
+                if (correctAnswer>=high_score) {
+                    // setHighScore(correctAnswer);
+                }
+
+            }
+            landingModal.show();
+
+            return correctAnswer;
+        }
+
+        function setHighScore(score){
+            // if (score >= high_score) {
+            //     high_score = score;
+            //     localStorage.setItem(game_level + "_level_highscore", high_score);
+            //     // document.getElementById("high_score").innerHTML="High Score:" + high_score;
+            // }
+        }
+
+        function setGameLevel(gamelevel) {
+            game_level = gamelevel;
+            sessionStorage.setItem("game_level", game_level);
+            initGame();
+            startGame();
+        }
+
+        function clearLocalStorage() {
+            localStorage.removeItem('easy_level_highscore');
+            localStorage.removeItem('hard_level_highscore');
+            localStorage.removeItem('expert_level_highscore');
+        }
+
+        function clearSessionStorage() {
+            sessionStorage.removeItem('game_level');
+            sessionStorage.removeItem('high_score');
+        }
+
+        function clearStorage() {
+            high_score = score;
+            // document.getElementById("high_score").innerHTML="High Score:" + high_score;
+            clearSessionStorage();
+            clearLocalStorage();
+            initGame();
+        }
+
+        function showInfo(){
+            modalDetails = ["How to play","To play, wait for timer to finish. Drag images to their original position. Score will be based on total number of images in their original position!"];
+            landingModal.show();
+
+        }
+
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-1 col-lg-1">
+        </div>
+        <div class="col-12 col-md-10 col-lg-10">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-1 col-xl-2">
+                    </div>
+
+                    <div class="col-12 col-lg-10 col-xl-8">
+                        <div class="logo">
+                            <img src="assets/images/messymemlogobrown.webp"></img>
+                        </div>
+                        <div class="game-container">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-1">
+                                    </div>
+
+                                    <div id="expert_level " class="col-12 col-md-12 col-lg-10">
+                                        <div class="row expert_drop_div">
+                                            <div id="div_expert_image1" class="col-4 img_container expert">
+                                                <img id="expert_image1" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_expert_image2" class="col-4 img_container expert">
+                                                <img id="expert_image2" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_expert_image3" class="col-4 img_container expert">
+                                                <img id="expert_image3" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                        </div>
+                                        <div class="row expert_drop_div">
+                                            <div id="div_expert_image4" class="col-4 img_container expert">
+                                                <img id="expert_image4" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_expert_image5" class="col-4 img_container expert">
+                                                <img id="expert_image5" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_expert_image6" class="col-4 img_container expert">
+                                                <img id="expert_image6" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                        </div>
+                                        <div class="row expert_drop_div">
+                                            <div id="div_expert_image7" class="col-4 img_container expert">
+                                                <img id="expert_image7" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_expert_image8" class="col-4 img_container expert">
+                                                <img id="expert_image8" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                            <div id="div_expert_image9" class="col-4 img_container expert">
+                                                <img id="expert_image9" class="img-thumbnail mx-auto d-block" draggable="false" alt="4" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="score-container">
+                            <div class="container">
+                                <div class="row">
+
+                                    <div class="col-sm-4 col-12">
+                                        <div class="action_button button_container bg-info text-white">
+                                            <div class="card-body" onclick="showInfo();">How to</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-12">
+                                        <div class="action_button button_container bg-info text-white">
+                                            <div class="card-body" onclick="startGame();">Start Game</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-12">
+                                        <div class="action_button button_container bg-info text-white">
+                                            <div class="card-body" onclick="clearStorage();">Reset Game</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+<!--                    <div class="col-lg-3">-->
+<!--                        <div class="col-1 "><h3 id="instruction_box" class="bg-info text-success">Remember the cards and their position!</h3></div>-->
+<!--                        <div class="col-3"><h3 id="timeleft" class="bg-info text-warning"></h3></div>-->
+<!--                    </div>-->
+                    <div class="col-lg-1 col-xl-2">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1 col-lg-1">
+    </div>
+</div>
+</div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Modal body..
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--<script src="assets/js/script.js"></script>-->
+</body>
+</html>
