@@ -105,7 +105,9 @@
                             var y = parseInt(image.style.top);
 
                             var endTarget = document.elementFromPoint(x, y);
-                            swapParent(e.target,endTarget);
+                            if (endTarget.id.startsWith("expert_image")) {
+                                swapParent(e.target,endTarget);
+                            }
                         })
 
                     }
