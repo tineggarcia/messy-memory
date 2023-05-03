@@ -22,7 +22,7 @@
         let array = [1, 2, 3, 4, 5, 6,7,8,9];
         let shuffledArray = array.sort((a, b) => 0.5 - Math.random());
 
-        let game_level="expert";
+        var game_level="expert";
         function initGame() {
             clearImageDivs();
 
@@ -81,6 +81,33 @@
                     var images = document.querySelectorAll(".img_container>img");
                     for (let image of images) {
                         image.draggable = true;
+
+                        image.addEventListener('touchstart', function(e){
+                            console.log('btn touched: ' + e.target.id);
+                        });
+
+                        image.addEventListener('touchmove', function(e) {
+                            // grab the location of touch
+                            var touchLocation = e.targetTouches[0];
+
+                            // assign box new coordinates based on the touch.
+                            image.style.left = touchLocation.pageX + 'px';
+                            image.style.top = touchLocation.pageY + 'px';
+                        })
+
+                        /* record the position of the touch
+                        when released using touchend event.
+                        This will be the drop position. */
+
+                        image.addEventListener('touchend', function(e) {
+                            // current box position.
+                            var x = parseInt(image.style.left);
+                            var y = parseInt(image.style.top);
+
+                            var endTarget = document.elementFromPoint(x, y);
+                            swapParent(e.target,endTarget);
+                        })
+
                     }
 
                     // document.getElementById("instruction_box").innerHTML = "Put them back to original position!";
@@ -142,6 +169,13 @@
             var sourceDiv=document.getElementById(ev.dataTransfer.getData("parent"));
             ev.target.parentElement.appendChild(document.getElementById(data));
             sourceDiv.appendChild(ev.target);
+        }
+
+        function swapParent(swap1, swap2) {
+            var source = swap1.parentElement;
+            var target = swap2.parentElement;
+            target.appendChild(swap1);
+            source.appendChild(swap2);
         }
 
         function checkOk() {
@@ -294,8 +328,8 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-4 col-12">
-                                        <div class="action_button button_container bg-info text-white">
-                                            <div class="card-body" onclick="startGame();">Start Game</div>
+                                        <div class="action_button button_container bg-info text-white" onclick="startGame();">
+                                            <div class="card-body">Start Game</div>
                                         </div>
                                     </div>
                                     <div class="col-sm-4 col-12">
