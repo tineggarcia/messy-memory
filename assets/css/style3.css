@@ -8,24 +8,7 @@ body{
     background: url('../images/mainbg.webp') no-repeat fixed center;
 }
 
-.main-left-div {
-    width: 5%;
-    flex: auto;
-}
-
-.main-center-div {
-    width: 90%;
-    flex: auto;
-}
-
-.main-right-div {
-    width: 5%;
-    flex: auto;
-}
-
-
-
-.score-container {
+.brown-container {
     border-radius: 15px;
     margin: .5rem 0 .5rem 0;
     border: 5px solid rgba(0, 0, 0, 0.84);
@@ -34,9 +17,43 @@ body{
     opacity: .8;
 }
 
-.game-container {
+.info-container {
     margin-top: .3rem;
-    border: 3px solid red;
+    border: 5px solid red;
+    border-radius: 10px;
+    background-image: url('../images/mariobackgrd.jpg');
+    background-size: cover;
+    background-position: left;
+    background-blend-mode: lighten;
+    opacity: .8;
+    /*height: 5rem;*/
+    /*border-radius: 15px;*/
+    /*border: #00aa88;*/
+    /*border-style: groove;*/
+    text-align: center;
+
+    padding: .1rem 0 0 0;
+}
+
+#top {
+    /*font-size: 10px;*/
+    font-size: calc(1vw + 1vh)
+}
+
+#lastPerfectScoree {
+    font-size: calc(1vw + 3vh)
+}
+
+#timer {
+    font-size: 16px;
+    font-size: calc(.8vw + 5vh)
+    /*font-size: xx-large;*/
+    /*font-optical-sizing: inherit;*/
+}
+
+.red-container {
+    margin-top: .3rem;
+    border: 5px solid red;
     border-radius: 10px;
     background-image: url('../images/mariobackgrd.jpg');
     background-size: cover;
@@ -97,7 +114,6 @@ body{
 .action_button {
     height: 3rem;
     margin: 1rem 0 1rem;
-    /*padding: 2rem 0 1rem;*/
 }
 
 .card-body {
@@ -105,8 +121,6 @@ body{
 }
 
 .button_container {
-    /*height: 4rem;*/
-    /*width: 15rem;*/
     border-radius: 15px;
     border: #00aa88;
     border-style: groove;

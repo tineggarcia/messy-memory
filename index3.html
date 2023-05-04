@@ -16,7 +16,7 @@
     <title>Messy Memory Game</title>
 </head>
 <script>
-    var myModal;
+    let myModal;
     var firstLand = true;
     let modalDetails = ["How to play","To play, wait for timer to finish. Drag images to their original position. Score will be based on total number of images in their original position!"];
 
@@ -27,6 +27,8 @@
 
     function initGame() {
         clearImageDivs();
+        var lastPerfectScoree = localStorage.getItem("last_perfect_scoree");
+        document.getElementById("lastPerfectScoree").innerHTML=lastPerfectScoree;
     }
 
     function attachEventListeners() {
@@ -106,14 +108,14 @@
             imgElem.src = "assets/images/image" + shuffledArray[i] + ".webp";
         }
 
-        var countTimer = 10;
+        var countTimer = 15;
 
         // Update the count down every 1 second
         var gametimer = setInterval(function() {
 
             // If the count down is over, write some text
             if (countTimer>=0) {
-                // document.getElementById("timeleft").innerHTML = countTimer;
+                document.getElementById("timer").innerHTML = countTimer;
             }
             if (countTimer <= 0 && countTimer>-2) {
                 shuffleImageDivs();
@@ -125,15 +127,12 @@
                 // document.getElementById("timeleft").innerHTML = "Time left:" + (countTimer + 12);
             }
             if (countTimer <=-2) {
-                // document.getElementById("timeleft").innerHTML = "Time left:" + (countTimer + 12);
+                document.getElementById("timer").innerHTML = (countTimer + 23);
             }
-            if (countTimer <-12) {
+            if (countTimer <-22) {
                 clearInterval(gametimer);
-
                 removeEventListeners();
                 let myscore = checkOk();
-                // document.getElementById("instruction_box").innerHTML = "Time's up! Your score is " + myscore;
-                // document.getElementById("timeleft").innerHTML = "Well Done!!!";
             }
 
             countTimer--;
@@ -153,7 +152,7 @@
 
         for (let i=0; i<array.length; i++) {
             let imgElem = document.getElementById(game_level + "_image"+ (i+1));
-            imgElem.src = "assets/images/mario.webp";
+            imgElem.src = "assets/images/mushroom.webp";
         }
 
         // let image_divs = document.querySelectorAll(".img_container");
@@ -217,28 +216,37 @@
 
         if (check) {
             // //alert("Wowwowwie! You got a perfect score!!! Resetting high score back to zero...");
-            modalDetails=["Wowwowwie!!!","You got a perfect score!!! Resetting high score back to zero.."];
-            localStorage.setItem(game_level + "_level_completed","Y");
+            // modalDetails=["Wowwowwie!!!","You got a perfect score!!! Adding you to the hall of fame.."];
+            // localStorage.setItem(game_level + "_level_completed","Y");
+
+            let high_score = new bootstrap.Modal(document.getElementById('highscoremodal'), {});
+            high_score.show();
+
             // setHighScore(0);
         } else {
             modalDetails=["Well Done!!!","Your score is " + correctAnswer];
+            myModal = document.getElementById('myModal');
+            var title = modalDetails[0];
+            var modalMessage = modalDetails[1];
 
-            // if (correctAnswer>=high_score) {
-            //     // setHighScore(correctAnswer);
-            // }
+            var modalTitle = myModal.querySelector('.modal-title');
+            var modalBodyInput = myModal.querySelector('.modal-body');
 
+            modalTitle.textContent = title;
+            modalBodyInput.textContent = modalMessage;
+            weldonemodal = new bootstrap.Modal(document.getElementById('myModal'), {});
+            weldonemodal.show();
         }
-        landingModal.show();
+        // landingModal.show();
 
         return correctAnswer;
     }
 
-    function setHighScore(score){
-        // if (score >= high_score) {
-        //     high_score = score;
-        //     localStorage.setItem(game_level + "_level_highscore", high_score);
-        //     // document.getElementById("high_score").innerHTML="High Score:" + high_score;
-        // }
+    function setLastPerfectScore(){
+        var initials = document.getElementById("initials").value;
+        localStorage.setItem("last_perfect_scoree", initials);
+        document.getElementById("lastPerfectScoree").innerHTML=initials;
+
     }
 
     function setGameLevel(gamelevel) {
@@ -288,17 +296,20 @@
                     <div class="col-12 col-lg-10 col-xl-8">
                         <div class="container">
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-2 col-sm-3 info-container bg-warning">
+                                        <div id="top" class="card-body">Top Scoree</div>
+                                        <div id="lastPerfectScoree" class="card-body">Top</div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-8 col-sm-6">
                                     <img class="img-thumbnail mx-auto d-block" src="assets/images/messymemlogobrown.webp"></img>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-2 col-sm-3 info-container bg-warning">
+                                        <div id="timer" class="card-body">?</div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="game-container">
+                        <div class="red-container">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-lg-1">
@@ -344,7 +355,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="score-container">
+                        <div class="brown-container">
                             <div class="container">
                                 <div class="row">
 
@@ -368,10 +379,6 @@
                         </div>
 
                     </div>
-<!--                    <div class="col-lg-3">-->
-<!--                        <div class="col-1 "><h3 id="instruction_box" class="bg-info text-success">Remember the cards and their position!</h3></div>-->
-<!--                        <div class="col-3"><h3 id="timeleft" class="bg-info text-warning"></h3></div>-->
-<!--                    </div>-->
                     <div class="col-lg-1 col-xl-2">
                     </div>
                 </div>
@@ -389,25 +396,50 @@
 <div class="modal fade" id="myModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Modal Heading</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-
             <!-- Modal body -->
             <div class="modal-body">
                 Modal body..
             </div>
-
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
             </div>
-
         </div>
     </div>
 </div>
+<div class="modal fade" id="highscoremodal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Wowwowwie!!!</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                You got a perfect score!!! Adding you to the hall of fame..
+                Please enter your initials..
+                <form id="inputs" class="needs-validation" novalidate="">
+                    <div class="form-group mx-2 mb-3">
+                        <label for="initials">Initials</label>
+                        <input type="text" class="form-control" id="initials" placeholder="initials" required="" maxlength="3">
+                    </div>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="setLastPerfectScore();">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

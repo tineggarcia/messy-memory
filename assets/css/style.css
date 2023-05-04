@@ -33,7 +33,7 @@ body{
     opacity: .8;
 }
 
-.game-container {
+.red-container {
     margin-top: .5vw;
     border: 5px solid red;
     background-image: url('../images/mariobackgrd.jpg');
