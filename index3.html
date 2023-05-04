@@ -101,6 +101,10 @@
     });
 
     function startGame() {
+
+        modalDetails=["New Game","Remember the images and their position!!!"];
+        showModalInfo();
+
         shuffledArray = array.sort((a, b) => 0.5 - Math.random());
 
         for (let i=0; i<shuffledArray.length; i++) {
@@ -108,33 +112,35 @@
             imgElem.src = "assets/images/image" + shuffledArray[i] + ".webp";
         }
 
-        var countTimer = 15;
+        var countTimer = 20;
+        var hasStarted = false;
+        var newTimer = 25;
 
-        // Update the count down every 1 second
         var gametimer = setInterval(function() {
 
-            // If the count down is over, write some text
+            // Update the count down every 1 second
             if (countTimer>=0) {
                 document.getElementById("timer").innerHTML = countTimer;
             }
+
             if (countTimer <= 0 && countTimer>-2) {
                 shuffleImageDivs();
-                // document.getElementById("timeleft").innerHTML = "Starting in.." + (countTimer+3);
             }
             if (countTimer==-2) {
+                modalDetails=["Ready","What are you waiting for?\nStart rearranging the image!!!"];
+                showModalInfo();
+                hasStarted=true;
                 attachEventListeners();
-                // document.getElementById("instruction_box").innerHTML = "Put them back to original position!";
-                // document.getElementById("timeleft").innerHTML = "Time left:" + (countTimer + 12);
             }
-            if (countTimer <=-2) {
-                document.getElementById("timer").innerHTML = (countTimer + 23);
+            if (countTimer <=-2 && hasStarted) {
+                document.getElementById("timer").innerHTML = newTimer;
+                newTimer--;
             }
-            if (countTimer <-22) {
+            if (newTimer <0) {
                 clearInterval(gametimer);
                 removeEventListeners();
-                let myscore = checkOk();
+                checkOk();
             }
-
             countTimer--;
         }, 1000);
     }
@@ -154,11 +160,6 @@
             let imgElem = document.getElementById(game_level + "_image"+ (i+1));
             imgElem.src = "assets/images/mushroom.webp";
         }
-
-        // let image_divs = document.querySelectorAll(".img_container");
-        // for (let image_div of image_divs) {
-        //     image_div.style.backgroundImage = "url('assets/images/mario.webp')";
-        // }
     }
 
     function allowDrop(ev) {
@@ -215,31 +216,18 @@
         }
 
         if (check) {
-            // //alert("Wowwowwie! You got a perfect score!!! Resetting high score back to zero...");
-            // modalDetails=["Wowwowwie!!!","You got a perfect score!!! Adding you to the hall of fame.."];
-            // localStorage.setItem(game_level + "_level_completed","Y");
-
             let high_score = new bootstrap.Modal(document.getElementById('highscoremodal'), {});
             high_score.show();
-
-            // setHighScore(0);
         } else {
             modalDetails=["Well Done!!!","Your score is " + correctAnswer];
-            myModal = document.getElementById('myModal');
-            var title = modalDetails[0];
-            var modalMessage = modalDetails[1];
-
-            var modalTitle = myModal.querySelector('.modal-title');
-            var modalBodyInput = myModal.querySelector('.modal-body');
-
-            modalTitle.textContent = title;
-            modalBodyInput.textContent = modalMessage;
-            weldonemodal = new bootstrap.Modal(document.getElementById('myModal'), {});
-            weldonemodal.show();
+            showModalInfo();
         }
-        // landingModal.show();
-
         return correctAnswer;
+    }
+
+    function showModalInfo() {
+        var modal1 = new bootstrap.Modal(document.getElementById('myModal'), {});
+        modal1.show();
     }
 
     function setLastPerfectScore(){
