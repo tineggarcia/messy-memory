@@ -26,29 +26,23 @@ body{
     background-position: left;
     background-blend-mode: lighten;
     opacity: .8;
-    /*height: 5rem;*/
-    /*border-radius: 15px;*/
-    /*border: #00aa88;*/
-    /*border-style: groove;*/
     text-align: center;
-
     padding: .1rem 0 0 0;
 }
 
 #top {
-    /*font-size: 10px;*/
+    font-size: 10px;
     font-size: calc(1vw + 1vh)
 }
 
 #lastPerfectScoree {
+    font-size: 14px;
     font-size: calc(1vw + 3vh)
 }
 
 #timer {
     font-size: 16px;
     font-size: calc(.8vw + 5vh)
-    /*font-size: xx-large;*/
-    /*font-optical-sizing: inherit;*/
 }
 
 .red-container {
@@ -67,28 +61,11 @@ body{
 
 }
 
-.expert_drop_div {
-    /*height: 7rem;*/
-    /*width: 6.75rem;*/
-    /*height: 6.75rem;*/
-
-}
-
 .img_container {
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    /*border-radius: 15px;*/
-    /*border: #00aa88;*/
-    /*border-style: groove;*/
     text-align: center;
-    /*margin: .5rem .5rem .5rem .5rem;*/
-    /*padding-top: .5rem;*/
-}
-
-.expert {
-    /*width: 6.75rem;*/
-    /*height: 6.75rem;*/
 }
 
 .expert>img {
@@ -98,9 +75,6 @@ body{
 .logo {
     height: 8rem;
     background-position: center;
-    /*border-radius: 15px;*/
-    /*border: #00aa88;*/
-    /*border-style: groove;*/
     text-align: center;
     margin: 0 1rem 0 1rem;
     padding-top: 1rem;
@@ -108,7 +82,6 @@ body{
 
 .logo>img {
     max-height: 96%;
-    /*background: url('../images/messyMemLogoNormal.png') no-repeat center center;*/
 }
 
 .action_button {
