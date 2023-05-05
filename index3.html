@@ -17,13 +17,19 @@
 </head>
 <script>
     let myModal;
-    var firstLand = true;
-    let modalDetails = ["How to play","To play, wait for timer to finish. Drag images to their original position. Score will be based on total number of images in their original position!"];
+    let modalDetails = "";
+    // ["How to play",
+    //     "\nTo play, wait for timer to finish. " +
+    //     "\nDrag images to their original position. " +
+    //     "\nScore will be based on total number of images in their original position!" +
+    //     "\nPress 'Help Me' to mark images already in correct position(max 3)."];
 
     let array = [1, 2, 3, 4, 5, 6,7,8,9];
     let shuffledArray = array.sort((a, b) => 0.5 - Math.random());
 
     var game_level="expert";
+
+    var gameOnGoing=false;
 
     function initGame() {
         clearImageDivs();
@@ -31,71 +37,110 @@
         document.getElementById("lastPerfectScoree").innerHTML=lastPerfectScoree;
     }
 
+    function touchMove(e, image) {
+        var touchLocation = e.targetTouches[0];
+
+        // assign box new coordinates based on the touch.
+        image.style.left = touchLocation.pageX + 'px';
+        image.style.top = touchLocation.pageY + 'px';
+    }
+
+    function touchEnd(e,image) {
+        // current box position.
+        var x = parseInt(image.x);
+        var y = parseInt(image.y);
+
+        var endTarget = document.elementFromPoint(x, y);
+        if (endTarget.id.startsWith("expert_image")) {
+            swapParent(e.target,endTarget);
+        }
+    }
+
     function attachEventListeners() {
         var images = document.querySelectorAll(".img_container>img");
         for (let image of images) {
             image.draggable = true;
 
-            image.addEventListener('touchstart', function(e){
-            });
-
-            image.addEventListener('touchmove', function(e) {
-                // grab the location of touch
+            image.addEventListener('touchstart', {}, {passive:true});
+            image.addEventListener('touchmove', function (e) {
                 var touchLocation = e.targetTouches[0];
 
                 // assign box new coordinates based on the touch.
                 image.style.left = touchLocation.pageX + 'px';
                 image.style.top = touchLocation.pageY + 'px';
-            })
+            },{passive:true});
 
-            /* record the position of the touch
-            when released using touchend event.
-            This will be the drop position. */
-
-            image.addEventListener('touchend', function(e) {
-                // current box position.
+            image.addEventListener('touchend', function (e) {
                 var x = parseInt(image.style.left);
                 var y = parseInt(image.style.top);
-
                 var endTarget = document.elementFromPoint(x, y);
-                if (endTarget.id.startsWith("expert_image")) {
+                if (endTarget.id.startsWith("expert_image") && gameOnGoing) {
                     swapParent(e.target,endTarget);
                 }
-            })
-
+            },{passive:true});
         }
+
+        var helpMeButton = document.getElementById("helpMeButton");
+        helpMeButton.addEventListener("click", helpMe, {once:true});
 
     }
     function removeEventListeners() {
         var images = document.querySelectorAll(".img_container>img");
         for (let image of images) {
             image.draggable = false;
-            image.removeEventListener('touchstart', function(e){});
-            image.removeEventListener('touchmove', function(e){});
-            image.removeEventListener('touchend', function(e){});
+            image.removeEventListener('touchstart', {}, {passive:true});
+            image.removeEventListener('touchmove', function (e) {
+                var touchLocation = e.targetTouches[0];
+
+                // assign box new coordinates based on the touch.
+                image.style.left = touchLocation.pageX + 'px';
+                image.style.top = touchLocation.pageY + 'px';
+            },{passive:true});
+
+            image.removeEventListener('touchend', function (e) {
+                var x = parseInt(image.style.left);
+                var y = parseInt(image.style.top);
+                var endTarget = document.elementFromPoint(x, y);
+                if (endTarget.id.startsWith("expert_image")) {
+                    swapParent(e.target,endTarget);
+                }
+            },{passive:true});
         }
+
+        var helpMeButton = document.getElementById("helpMeButton");
+        helpMeButton.removeEventListener("click", helpMe, {once:true});
+
+        var startButton = document.getElementById("startGameButton");
+        startButton.addEventListener("click",startGame);
     }
 
     document.addEventListener('DOMContentLoaded', function () {
 
         initGame();
 
+        var startButton = document.getElementById("startGameButton");
+        startButton.addEventListener("click", startGame);
+
         myModal = document.getElementById('myModal')
         myModal.addEventListener('show.bs.modal', function (event) {
             var title = modalDetails[0];
             var modalMessage = modalDetails[1];
+            var buttonAction = modalDetails[2];
 
             var modalTitle = myModal.querySelector('.modal-title');
             var modalBodyInput = myModal.querySelector('.modal-body');
+            var modalCloseButton = myModal.querySelector('#modalCloseButton');
 
             modalTitle.textContent = title;
             modalBodyInput.textContent = modalMessage;
         })
 
-        if (firstLand) {
-            firstLand=false;
+        let firstLand = sessionStorage.getItem("first_land");
+        if (firstLand != "N") {
+            firstLand="N";
+            sessionStorage.setItem("first_land",firstLand);
             landingModal = new bootstrap.Modal(document.getElementById('myModal'), {});
-            landingModal.show();
+            showInfo();
         }
 
     });
@@ -108,16 +153,20 @@
         shuffledArray = array.sort((a, b) => 0.5 - Math.random());
 
         for (let i=0; i<shuffledArray.length; i++) {
+            let image_div = document.getElementById("div_expert_image" + (i+1));
             let imgElem = document.getElementById(game_level + "_image"+ (i+1));
             imgElem.src = "assets/images/image" + shuffledArray[i] + ".webp";
+            image_div.appendChild(imgElem);
         }
 
-        var countTimer = 20;
+        var startButton = document.getElementById("startGameButton");
+        startButton.removeEventListener("click", startGame);
+
+        var countTimer = 15;
         var hasStarted = false;
-        var newTimer = 25;
+        var newTimer = 23;
 
         var gametimer = setInterval(function() {
-
             // Update the count down every 1 second
             if (countTimer>=0) {
                 document.getElementById("timer").innerHTML = countTimer;
@@ -127,16 +176,20 @@
                 shuffleImageDivs();
             }
             if (countTimer==-2) {
-                modalDetails=["Ready","What are you waiting for?\nStart rearranging the image!!!"];
+                gameOnGoing=true;
+                modalDetails=["Ready","Time is running out!  Start rearranging the images!!!"];
                 showModalInfo();
                 hasStarted=true;
                 attachEventListeners();
             }
-            if (countTimer <=-2 && hasStarted) {
-                document.getElementById("timer").innerHTML = newTimer;
+            if (hasStarted) {
+                if (newTimer<21) {
+                    document.getElementById("timer").innerHTML = newTimer;
+                }
                 newTimer--;
             }
             if (newTimer <0) {
+                gameOnGoing=false;
                 clearInterval(gametimer);
                 removeEventListeners();
                 checkOk();
@@ -144,7 +197,6 @@
             countTimer--;
         }, 1000);
     }
-
 
     function shuffleImageDivs() {
         let reshuffleArray = array.sort((a, b) => 0.5 - Math.random());
@@ -155,7 +207,6 @@
     }
 
     function clearImageDivs() {
-
         for (let i=0; i<array.length; i++) {
             let imgElem = document.getElementById(game_level + "_image"+ (i+1));
             imgElem.src = "assets/images/mushroom.webp";
@@ -174,16 +225,16 @@
     function drop(ev) {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
-        var sourceDiv=document.getElementById(ev.dataTransfer.getData("parent"));
-        ev.target.parentElement.appendChild(document.getElementById(data));
-        sourceDiv.appendChild(ev.target);
+        swapParent(document.getElementById(data),ev.target);
     }
 
     function swapParent(swap1, swap2) {
         var source = swap1.parentElement;
         var target = swap2.parentElement;
-        target.appendChild(swap1);
-        source.appendChild(swap2);
+        if (!(swap1.src.indexOf("ok_image")>0 || swap2.src.indexOf("ok_image")>0)) {
+            target.appendChild(swap1);
+            source.appendChild(swap2);
+        }
     }
 
     function helpMe() {
@@ -216,7 +267,7 @@
         }
 
         if (check) {
-            let high_score = new bootstrap.Modal(document.getElementById('highscoremodal'), {});
+            let high_score = new bootstrap.Modal(document.getElementById('highscoremodal'));
             high_score.show();
         } else {
             modalDetails=["Well Done!!!","Your score is " + correctAnswer];
@@ -232,41 +283,26 @@
 
     function setLastPerfectScore(){
         var initials = document.getElementById("initials").value;
-        localStorage.setItem("last_perfect_scoree", initials);
-        document.getElementById("lastPerfectScoree").innerHTML=initials;
-
-    }
-
-    function setGameLevel(gamelevel) {
-        game_level = gamelevel;
-        sessionStorage.setItem("game_level", game_level);
-        initGame();
-        startGame();
-    }
-
-    function clearLocalStorage() {
-        localStorage.removeItem('easy_level_highscore');
-        localStorage.removeItem('hard_level_highscore');
-        localStorage.removeItem('expert_level_highscore');
-    }
-
-    function clearSessionStorage() {
-        sessionStorage.removeItem('game_level');
-        sessionStorage.removeItem('high_score');
-    }
-
-    function clearStorage() {
-        high_score = score;
-        // document.getElementById("high_score").innerHTML="High Score:" + high_score;
-        clearSessionStorage();
-        clearLocalStorage();
-        initGame();
+        if (initials!=null) {
+            localStorage.setItem("last_perfect_scoree", initials);
+            document.getElementById("lastPerfectScoree").innerHTML=initials;
+            let high_score = bootstrap.Modal(document.getElementById('highscoremodal'));
+            high_score.hide();
+            return false;
+        } else {
+            return false;
+        }
     }
 
     function showInfo(){
-        modalDetails = ["How to play","To play, wait for timer to finish. Drag images to their original position. Score will be based on total number of images in their original position!"];
+        // modalDetails = ["How to play","To play, wait for timer to finish. Drag images to their original position. Score will be based on total number of images in their original position!"];
+        modalDetails =
+                ["How to play",
+                    "To play, wait for timer to finish.  " +
+                    "Drag images to their original position.  " +
+                    "Score will be based on total number of images in their original position!  " +
+                    "Press 'Help Me' to mark maximum 3 images that already in correct position(single use only)."];
         landingModal.show();
-
     }
 
 </script>
@@ -285,14 +321,14 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-2 col-sm-3 info-container bg-warning">
-                                        <div id="top" class="card-body">Top Scoree</div>
-                                        <div id="lastPerfectScoree" class="card-body">Top</div>
+                                    <div id="top" class="card-body">Top Scoree</div>
+                                    <div id="lastPerfectScoree" class="card-body">Top</div>
                                 </div>
                                 <div class="col-8 col-sm-6">
                                     <img class="img-thumbnail mx-auto d-block" src="assets/images/messymemlogobrown.webp"></img>
                                 </div>
                                 <div class="col-2 col-sm-3 info-container bg-warning">
-                                        <div id="timer" class="card-body">?</div>
+                                    <div id="timer" class="card-body">?</div>
                                 </div>
                             </div>
                         </div>
@@ -353,13 +389,13 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-4 col-12">
-                                        <div class="action_button button_container bg-info text-white" onclick="startGame();">
+                                        <div id="startGameButton" class="action_button button_container bg-info text-white">
                                             <div class="card-body">Start Game</div>
                                         </div>
                                     </div>
                                     <div class="col-sm-4 col-12">
-                                        <div class="action_button button_container bg-info text-white">
-                                            <div class="card-body" onclick="helpMe();">Help Me!</div>
+                                        <div id="helpMeButton" class="action_button button_container bg-info text-white">
+                                            <div class="card-body">Help Me!</div>
                                         </div>
                                     </div>
                                 </div>
@@ -395,7 +431,7 @@
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button id="modalCloseButton" type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -410,21 +446,25 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <!-- Modal body -->
-            <div class="modal-body">
-                You got a perfect score!!! Adding you to the hall of fame..
-                Please enter your initials..
-                <form id="inputs" class="needs-validation" novalidate="">
+            <form id="inputs" class="needs-validation" onsubmit="return setLastPerfectScore();">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    You got a perfect score!!! Adding you to the hall of fame..
+                    Please enter your initials..
+
                     <div class="form-group mx-2 mb-3">
                         <label for="initials">Initials</label>
-                        <input type="text" class="form-control" id="initials" placeholder="initials" required="" maxlength="3">
+                        <input type="text" class="form-control" id="initials" placeholder="initials" required maxlength="3">
                     </div>
-                </form>
-            </div>
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="setLastPerfectScore();">Submit</button>
-            </div>
+
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <input class="btn btn-danger" id="submit-button" type="submit" value="SUBMIT">
+
+                    <!--                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Submit</button>-->
+                </div>
+            </form>
         </div>
     </div>
 </div>
