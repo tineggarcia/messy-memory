@@ -1,112 +1,109 @@
 /*General style */
-    
+
 body{
     margin: 0;
     padding: 0;
-    
+
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: url('../images/mainbg.webp') no-repeat fixed center; 
+    background: url('../images/mainbg.webp') no-repeat fixed center;
 }
 
-.main-left-div {
-    width: 5%;
-    flex: auto;
-}
-
-.main-center-div {
-    width: 90%;
-    flex: auto;
-}
-
-.main-right-div {
-    width: 5%;
-    flex: auto;
-}
-
-
-
-.score-container {
-    margin: .5vw 0 .5vw 0;
+.brown-container {
+    border-radius: 15px;
+    margin: .5rem 0 .5rem 0;
     border: 5px solid rgba(0, 0, 0, 0.84);
     background-color: rgba(141, 76, 3, 0.75);
     background-blend-mode: lighten;
     opacity: .8;
 }
 
-.red-container {
-    margin-top: .5vw;
+.info-container {
+    margin-top: .3rem;
     border: 5px solid red;
+    border-radius: 10px;
     background-image: url('../images/mariobackgrd.jpg');
     background-size: cover;
     background-position: left;
     background-blend-mode: lighten;
     opacity: .8;
-    height: 34vw;
+    /*height: 5rem;*/
+    /*border-radius: 15px;*/
+    /*border: #00aa88;*/
+    /*border-style: groove;*/
+    text-align: center;
+
+    padding: .1rem 0 0 0;
+}
+
+#top {
+    /*font-size: 10px;*/
+    font-size: calc(1vw + 1vh)
+}
+
+#lastPerfectScoree {
+    font-size: calc(1vw + 3vh)
+}
+
+#timer {
+    font-size: 16px;
+    font-size: calc(.8vw + 5vh)
+    /*font-size: xx-large;*/
+    /*font-optical-sizing: inherit;*/
+}
+
+.red-container {
+    margin-top: .3rem;
+    border: 5px solid red;
+    border-radius: 10px;
+    background-image: url('../images/mariobackgrd.jpg');
+    background-size: cover;
+    background-position: left;
+    background-blend-mode: lighten;
+    opacity: .8;
 }
 
 .game-cards-container {
+    border-radius: 5px;
 
-}
-
-.easy_drop_div {
-    height: 16vw;
-    width: 32vw;
-}
-
-.hard_drop_div {
-    height: 13vw;
-    width: 46vw;
 }
 
 .expert_drop_div {
-    height: 11vw;
-    width: 46vw;
+    /*height: 7rem;*/
+    /*width: 6.75rem;*/
+    /*height: 6.75rem;*/
+
 }
 
 .img_container {
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    border-radius: 15px;
-    border: #00aa88;
-    border-style: groove;
+    /*border-radius: 15px;*/
+    /*border: #00aa88;*/
+    /*border-style: groove;*/
     text-align: center;
-    margin: .5vw .5vw .5vw .5vw;
-    padding-top: .5vw;
+    /*margin: .5rem .5rem .5rem .5rem;*/
+    /*padding-top: .5rem;*/
 }
 
-.easy {
-    width: 15vw;
-    height: 15vw;
-}
-.hard {
-    width: 11vw;
-    height: 11vw;
-}
 .expert {
-    width: 10vw;
-    height: 10vw;
+    /*width: 6.75rem;*/
+    /*height: 6.75rem;*/
 }
 
 .expert>img {
     max-height: 100%;
 }
-.hard>img {
-    max-height: 100%;
-}
-.easy>img {
-    max-height: 100%;
-}
 
 .logo {
-    height: 10vw;
+    height: 8rem;
     background-position: center;
     /*border-radius: 15px;*/
     /*border: #00aa88;*/
     /*border-style: groove;*/
     text-align: center;
-    margin: 0vw 1vw 0vw 1vw;
-    padding-top: 1vw;
+    margin: 0 1rem 0 1rem;
+    padding-top: 1rem;
 }
 
 .logo>img {
@@ -114,19 +111,9 @@ body{
     /*background: url('../images/messyMemLogoNormal.png') no-repeat center center;*/
 }
 
-h3 {
-    font-size: 1.5vw;
-    font-weight: bold;
-}
-
-#expert_level {
-    display: none;
-}
-
 .action_button {
-    height: 4vw;
-    margin: 2vw 0 2vw;
-    /*padding: 2vw 0 1vw;*/
+    height: 3rem;
+    margin: 1rem 0 1rem;
 }
 
 .card-body {
@@ -134,18 +121,10 @@ h3 {
 }
 
 .button_container {
-    height: 4vw;
-    width: 15vw;
-    border-radius: 5px;
+    border-radius: 15px;
     border: #00aa88;
     border-style: groove;
     text-align: center;
-    margin: .3vw .3vw .3vw .3vw;
-    padding-top: .3vw;
-}
-
-
-
-.expert_button {
-    display: none; !important;
+    margin: .3rem .3rem .3rem .3rem;
+    padding-top: .3rem;
 }
