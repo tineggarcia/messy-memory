@@ -4,7 +4,7 @@ The Messy Memory game is not your typical memory game. It is different from the 
 
 <a href="https://tineggarcia.github.io/messy-memory/index.html" target="_blank" rel="noopener">Messy Memory</a>
 
-![Messy Memory responsive screenshot](readme-images/amiresponsive.png)
+![Messy Memory responsive screenshot](https://tineggarcia.github.io/messy-memory/readme-images/amiresponsive.png)
 
 **[Live site](https://tineggarcia.github.io/messy-memory/index.html)**
 ------------------------------------------------------------------
