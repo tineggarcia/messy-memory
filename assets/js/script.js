@@ -141,7 +141,7 @@ function startGame() {
 
     var countTimer = 15;
     var hasStarted = false;
-    var newTimer = 23;
+    var newTimer = 28;
 
     var gametimer = setInterval(function () {
         // Update the count down every 1 second
@@ -215,12 +215,12 @@ function swapParent(swap1, swap2) {
 }
 
 function helpMe() {
-    const parentElement = document.querySelector("#" + game_level + "_level");
-    var images = parentElement.querySelectorAll("img");
-
     let helpCounter = 0;
-    for (let image of images) {
-        if (image.parentElement.id.endsWith(image.id) && helpCounter < 3) {
+    let imageIdx = array.sort((a, b) => 0.5 - Math.random());
+
+    for (let x=0; x<imageIdx.length; x++) {
+        let image = document.getElementById(game_level +"_image" + imageIdx[x]);
+        if (image.parentElement.id.endsWith(image.id) && helpCounter < 5) {
             image.src = image.src.replace("images/image", "images/ok_image");
             helpCounter++;
         }
