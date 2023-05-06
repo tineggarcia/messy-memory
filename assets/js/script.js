@@ -103,11 +103,9 @@ document.addEventListener('DOMContentLoaded', function () {
     myModal.addEventListener('show.bs.modal', function (event) {
         var title = modalDetails[0];
         var modalMessage = modalDetails[1];
-        var buttonAction = modalDetails[2];
 
         var modalTitle = myModal.querySelector('.modal-title');
         var modalBodyInput = myModal.querySelector('.modal-body');
-        var modalCloseButton = myModal.querySelector('#modalCloseButton');
 
         modalTitle.textContent = title;
         modalBodyInput.textContent = modalMessage;
@@ -139,17 +137,18 @@ function startGame() {
     var startButton = document.getElementById("startGameButton");
     startButton.removeEventListener("click", startGame);
 
-    var countTimer = 15;
+    var countTimer = 23;
     var hasStarted = false;
-    var newTimer = 28;
+    var newTimer = 23;
 
     var gametimer = setInterval(function () {
         // Update the count down every 1 second
-        if (countTimer >= 0) {
+        if (countTimer >= 0 && countTimer < 21) {
             document.getElementById("timer").innerHTML = countTimer;
         }
 
         if (countTimer <= 0 && countTimer > -2) {
+            hideModalInfo();
             shuffleImageDivs();
         }
         if (countTimer == -2) {
@@ -160,6 +159,9 @@ function startGame() {
             attachEventListeners();
         }
         if (hasStarted) {
+            if (newTimer == 20) {
+                hideModalInfo();
+            }
             if (newTimer < 21) {
                 document.getElementById("timer").innerHTML = newTimer;
             }
@@ -254,8 +256,13 @@ function checkOk() {
 }
 
 function showModalInfo() {
-    var modal1 = new bootstrap.Modal(document.getElementById('myModal'), {});
+    var modal1 = bootstrap.Modal.getOrCreateInstance(document.getElementById('myModal'));
     modal1.show();
+}
+
+function hideModalInfo() {
+    var modal1 = bootstrap.Modal.getOrCreateInstance(document.getElementById('myModal'));
+    modal1.hide();
 }
 
 function setLastPerfectScore() {
@@ -278,6 +285,5 @@ function showInfo() {
             "Drag images to their original position.  " +
             "Score will be based on total number of images in their original position!  " +
             "Press 'Help Me' to mark maximum 3 images that already in correct position(single use only)."];
-    infoModal = new bootstrap.Modal(document.getElementById('myModal'), {});
-    infoModal.show();
+    showModalInfo();
 }
