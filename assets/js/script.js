@@ -71,7 +71,7 @@ function removeEventListeners() {
 
     var helpMeButton = document.getElementById("helpMeButton");
     helpMeButton.removeEventListener("click", helpMe, {once: true});
-    helpMeButton.style.opacity = .4;
+    helpMeButton.style.opacity = 0.4;
 
     var startButton = document.getElementById("startGameButton");
     startButton.addEventListener("click", startGame);
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
     showInfoButton.addEventListener("click", showInfo);
     showInfoButton.style.opacity = 1;
 
-    myModal = document.getElementById('myModal')
+    myModal = document.getElementById('myModal');
     myModal.addEventListener('show.bs.modal', function (event) {
         var title = modalDetails[0];
         var modalMessage = modalDetails[1];
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         modalTitle.textContent = title;
         modalBodyInput.textContent = modalMessage;
-    })
+    });
 
     let firstLand = sessionStorage.getItem("first_land");
     if (firstLand != "N") {
@@ -130,14 +130,14 @@ function startGame() {
 
     var startButton = document.getElementById("startGameButton");
     startButton.removeEventListener("click", startGame);
-    startButton.style.opacity = .4;
+    startButton.style.opacity = 0.4;
 
     var showInfoButton = document.getElementById("showInfoButton");
     showInfoButton.removeEventListener("click", startGame);
-    showInfoButton.style.opacity = .4;
+    showInfoButton.style.opacity = 0.4;
 
     var helpMeButton = document.getElementById("helpMeButton");
-    helpMeButton.style.opacity=.4;
+    helpMeButton.style.opacity=0.4;
 
 
     var countTimer = 23;
@@ -158,7 +158,7 @@ function startGame() {
         }
         if (countTimer == -2) {
             gameOnGoing = true;
-            modalDetails = ["Ready", "Time is running out!  Start rearranging the images!!!"];
+            modalDetails = ["Ready", "Time is running out!  Start rearranging the images!"];
             showModalInfo();
             hasStarted = true;
             attachEventListeners();
@@ -233,7 +233,7 @@ function helpMe() {
         }
     }
     var helpMeButton = document.getElementById("helpMeButton");
-    helpMeButton.style.opacity = .4;
+    helpMeButton.style.opacity = 0.4;
 
 }
 
@@ -257,7 +257,11 @@ function checkOk() {
         let high_score = new bootstrap.Modal(document.getElementById('highscoremodal'));
         high_score.show();
     } else {
-        modalDetails = ["Well Done!!!", "Your score is " + correctAnswer];
+        var modalTitle = "Well Done!";
+        if (correctAnswer<3) {
+            modalTitle = "Keep on trying";
+        }
+        modalDetails = [modalTitle, "Your score is " + correctAnswer];
         showModalInfo();
     }
     return correctAnswer;
@@ -294,6 +298,6 @@ function showInfo() {
             "(2) Within 20 seconds, remember the positions of the images on the board before they are shuffled.  " +
             "(3) Once cards are shuffled, within 20 seconds start dragging the images to their original position.  " +
             "(4) The score is based on the number of images in their correct placements.  " +
-            "(5) Clicking \"Help Me!\" will mark up to 4 images already in their correct places.  This can be used only once in the game."];
+            "(5) Clicking \"Help Me!\" will mark up to 5 images already in their correct places.  This can be used only once in the game."];
     showModalInfo();
 }
