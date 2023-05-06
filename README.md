@@ -192,8 +192,26 @@ Below the game area, three (3) buttons are provided to be used by the user. They
 
 ## Images/Stock photos
 
+Landing First Time
+![img.png](readme-images/LandingFirstTime.png)
 
+Landing Subsequent
+![img.png](readme-images/Landing2ndTime.png)
 
+New Game
+![img.png](readme-images/NewGame.png)
+
+Re-arrange Start
+![img.png](readme-images/StartRearrange.png)
+
+Score is Low
+![img.png](readme-images/ScoreIsLow.png)
+
+Score is Decent
+![img.png](readme-images/ScoreIsDecent.png)
+
+Perfect Score
+![img.png](readme-images/ScoreIsPerfect.png)
 
 
 * Top Scorer
@@ -290,6 +308,11 @@ feedback across various devices.
 * Javascript Testing results, NO ERRORS FOUND and cleared.
 
 ![JS Validation](readme-images/jshint_javascript_validation.png)
+
+
+
+Enhancement/Issues Found and Closed before Submitting Project
+![Issues](readme-images/IssuesClosed.png)
 
 
 
