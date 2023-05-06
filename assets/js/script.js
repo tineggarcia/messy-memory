@@ -146,9 +146,11 @@ function startGame() {
         if (countTimer >= 0 && countTimer < 21) {
             document.getElementById("timer").innerHTML = countTimer;
         }
+        if (countTimer==20) {
+            hideModalInfo();
+        }
 
         if (countTimer <= 0 && countTimer > -2) {
-            hideModalInfo();
             shuffleImageDivs();
         }
         if (countTimer == -2) {

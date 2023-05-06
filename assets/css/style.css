@@ -28,19 +28,14 @@ body{
     padding: .1rem 0 0 0;
 }
 
-#top {
+.small-font {
     font-size: 10px;
     font-size: calc(1vw + 1vh)
 }
 
-#lastPerfectScoree {
+.big-font {
     font-size: 14px;
     font-size: calc(1vw + 3vh)
-}
-
-#timer {
-    font-size: 16px;
-    font-size: calc(.8vw + 5vh)
 }
 
 .red-container {
