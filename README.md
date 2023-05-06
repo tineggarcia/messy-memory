@@ -311,7 +311,7 @@ feedback across various devices.
 
 
 
-Enhancement/Issues Found and Closed before Submitting Project
+### Enhancement/Issues Found and Closed before Submitting Project
 ![Issues](readme-images/IssuesClosed.png)
 
 
@@ -323,25 +323,9 @@ Enhancement/Issues Found and Closed before Submitting Project
 
 ### Content
 
-
-
 * The font came from [Google Fonts](https://fonts.google.com/).
 
-* For the pairing of the fonts I used [Fontjoy](https://fontjoy.com) .
-
-* I compressed the images using [Tiny Img](https://tiny-img.com/webp).
-
-* Most of the photos belongs to myself but I took a few from [Pexels](https://www.pexels.com/)
-
-  and [Unsplash](https://unsplash.com).
-
-* The video used on the homepage is from [Pexels](https://www.pexels.com/).
-
-* The embedded cupcake icon used from [Giphy.com](https://giphy.com/)
-
-* The icons used came from [Font Awesome](https://fontawesome.com/)
-
-* The Flex and CSS Grid was learned Geek for Geeks Youtube channel [YouTube tutorial](https://www.youtube.com/).
+* I used some Supermario images from Veezty, Pixabay, Unsplash.
 
 * I took some code examples from [Stack Overflow](https://stackoverflow.com/), [CSS-Tricks](https://css-tricks,com/)
 
@@ -351,11 +335,7 @@ Enhancement/Issues Found and Closed before Submitting Project
 
 * I used the [W3C Validator](https://validator.w3.org/) and [Jigsaw Validator](https://jigsaw.w3.org/css-validator) for my HTML and CSS code testings.
 
-* I used the Google Lighthouse for the Performance testing of my website.
-
-* I also used [Brackets](https://brackets.io/) source code editor when I ran out of Gitpod hours and it
-
-  was a weekend hence, no tutor care available.
+* I used the [jshint Validator](https://jshint.com/) Javascript code testings.
 
 
 
@@ -370,9 +350,7 @@ Enhancement/Issues Found and Closed before Submitting Project
 To deploy the project I followed these steps starting from the main project repository
 
 
-[here](https://github.com/tineggarcia/bakingfrenzy).
-
-
+[here](https://github.com/tineggarcia/messy-memory).
 
 
 1. Clicked on Settings on the navigation menu in the repository
@@ -384,11 +362,6 @@ To deploy the project I followed these steps starting from the main project repo
 4. In the next dropdown labeled /root I left as the default option.
 
 5. Selected Save
-
-
-
-I then received a notification from GitHub that my project is being deployed and after about 1 minute & a couple of refreshes of the page it was ready and live.
-
 
 
 
