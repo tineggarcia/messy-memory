@@ -9,13 +9,15 @@ body{
 }
 
 .red-box {
-    border: 5px solid red;
+    border: 5px solid darkred;
     background-color: rgba(255, 16, 0, 0.38);
     border-radius: 10px;
 }
 
 .button-container {
     border-radius: 10px;
+    border: 5px solid brown;
+    background-color: rgba(255, 16, 0, 0.38);
     margin: .5rem 0 .5rem 0;
     background-blend-mode: lighten;
     opacity: .8;
@@ -43,7 +45,7 @@ body{
 
 .red-container {
     margin-top: .3rem;
-    border: 5px solid red;
+    border: 5px solid darkred;
     border-radius: 10px;
     background-image: url('../images/mariobackgrd.jpg');
     background-size: cover;
