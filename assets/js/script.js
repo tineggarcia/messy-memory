@@ -10,6 +10,9 @@ var gameOnGoing = false;
 function initGame() {
     clearImageDivs();
     var lastPerfectScoree = localStorage.getItem("last_perfect_scoree");
+    if (lastPerfectScoree!=null) {
+        lastPerfectScoree=lastPerfectScoree.toUpperCase();
+    }
     document.getElementById("lastPerfectScoree").innerHTML = lastPerfectScoree;
 }
 
@@ -77,8 +80,6 @@ function removeEventListeners() {
     var showInfoButton = document.getElementById("showInfoButton");
     showInfoButton.addEventListener("click", showInfo);
     showInfoButton.style.opacity = 1;
-
-
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -88,6 +89,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var startButton = document.getElementById("startGameButton");
     startButton.addEventListener("click", startGame);
     startButton.style.opacity = 1;
+
+    var showInfoButton = document.getElementById("showInfoButton");
+    showInfoButton.addEventListener("click", showInfo);
+    showInfoButton.style.opacity = 1;
 
     myModal = document.getElementById('myModal')
     myModal.addEventListener('show.bs.modal', function (event) {
@@ -112,11 +117,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function startGame() {
 
-    modalDetails = ["New Game", "Remember the images and their position!!!"];
+    modalDetails = ["New Game", "Remember the images and their position!"];
     showModalInfo();
 
     shuffledArray = array.sort((a, b) => 0.5 - Math.random());
-
     for (let i = 0; i < shuffledArray.length; i++) {
         let image_div = document.getElementById("div_expert_image" + (i + 1));
         let imgElem = document.getElementById(game_level + "_image" + (i + 1));
@@ -272,6 +276,7 @@ function hideModalInfo() {
 function setLastPerfectScore() {
     var initials = document.getElementById("initials").value;
     if (initials != null) {
+        initials = initials.toUpperCase();
         localStorage.setItem("last_perfect_scoree", initials);
         document.getElementById("lastPerfectScoree").innerHTML = initials;
         let high_score = bootstrap.Modal(document.getElementById('highscoremodal'));
@@ -284,10 +289,11 @@ function setLastPerfectScore() {
 
 function showInfo() {
     modalDetails =
-        ["How to play",
-            "To play, wait for timer to finish.  " +
-            "Drag images to their original position.  " +
-            "Score will be based on total number of images in their original position!  " +
-            "Press 'Help Me' to mark maximum 3 images that already in correct position(single use only)."];
+        ["How to Play:",
+            "(1) Click on \"New Game\" to begin.  " +
+            "(2) Within 20 seconds, remember the positions of the images on the board before they are shuffled.  " +
+            "(3) Once cards are shuffled, within 20 seconds start dragging the images to their original position.  " +
+            "(4) The score is based on the number of images in their correct placements.  " +
+            "(5) Clicking \"Help Me!\" will mark up to 4 images already in their correct places.  This can be used only once in the game."];
     showModalInfo();
 }
