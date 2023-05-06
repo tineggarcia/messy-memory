@@ -4,33 +4,13 @@ let modalDetails = "";
 let array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 let shuffledArray = array.sort((a, b) => 0.5 - Math.random());
 
-var game_level = "expert";
-
+var game_level = "expert"; //no longer used
 var gameOnGoing = false;
 
 function initGame() {
     clearImageDivs();
     var lastPerfectScoree = localStorage.getItem("last_perfect_scoree");
     document.getElementById("lastPerfectScoree").innerHTML = lastPerfectScoree;
-}
-
-function touchMove(e, image) {
-    var touchLocation = e.targetTouches[0];
-
-    // assign box new coordinates based on the touch.
-    image.style.left = touchLocation.pageX + 'px';
-    image.style.top = touchLocation.pageY + 'px';
-}
-
-function touchEnd(e, image) {
-    // current box position.
-    var x = parseInt(image.x);
-    var y = parseInt(image.y);
-
-    var endTarget = document.elementFromPoint(x, y);
-    if (endTarget.id.startsWith("expert_image")) {
-        swapParent(e.target, endTarget);
-    }
 }
 
 function attachEventListeners() {
@@ -59,6 +39,7 @@ function attachEventListeners() {
 
     var helpMeButton = document.getElementById("helpMeButton");
     helpMeButton.addEventListener("click", helpMe, {once: true});
+    helpMeButton.style.opacity = 1;
 
 }
 
@@ -87,9 +68,17 @@ function removeEventListeners() {
 
     var helpMeButton = document.getElementById("helpMeButton");
     helpMeButton.removeEventListener("click", helpMe, {once: true});
+    helpMeButton.style.opacity = .4;
 
     var startButton = document.getElementById("startGameButton");
     startButton.addEventListener("click", startGame);
+    startButton.style.opacity = 1;
+
+    var showInfoButton = document.getElementById("showInfoButton");
+    showInfoButton.addEventListener("click", showInfo);
+    showInfoButton.style.opacity = 1;
+
+
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -98,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var startButton = document.getElementById("startGameButton");
     startButton.addEventListener("click", startGame);
+    startButton.style.opacity = 1;
 
     myModal = document.getElementById('myModal')
     myModal.addEventListener('show.bs.modal', function (event) {
@@ -136,6 +126,15 @@ function startGame() {
 
     var startButton = document.getElementById("startGameButton");
     startButton.removeEventListener("click", startGame);
+    startButton.style.opacity = .4;
+
+    var showInfoButton = document.getElementById("showInfoButton");
+    showInfoButton.removeEventListener("click", startGame);
+    showInfoButton.style.opacity = .4;
+
+    var helpMeButton = document.getElementById("helpMeButton");
+    helpMeButton.style.opacity=.4;
+
 
     var countTimer = 23;
     var hasStarted = false;
@@ -229,6 +228,9 @@ function helpMe() {
             helpCounter++;
         }
     }
+    var helpMeButton = document.getElementById("helpMeButton");
+    helpMeButton.style.opacity = .4;
+
 }
 
 function checkOk() {
