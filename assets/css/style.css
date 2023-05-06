@@ -8,25 +8,21 @@ body{
     background: url('../images/mainbg.webp') no-repeat fixed center;
 }
 
-.brown-container {
-    border-radius: 15px;
+.red-box {
+    border: 5px solid red;
+    background-color: rgba(255, 16, 0, 0.38);
+    border-radius: 10px;
+}
+
+.button-container {
+    border-radius: 10px;
     margin: .5rem 0 .5rem 0;
-    border: 5px solid rgba(0, 0, 0, 0.84);
-    background-color: rgba(141, 76, 3, 0.75);
     background-blend-mode: lighten;
     opacity: .8;
 }
 
-.info-container {
+.score-time-container {
     margin-top: .3rem;
-    border: 5px solid red;
-    border-radius: 10px;
-    background-image: url('../images/mariobackgrd.jpg');
-    background-size: cover;
-    background-position: left;
-    background-blend-mode: lighten;
-    opacity: .8;
-    text-align: center;
     padding: .1rem 0 0 0;
 }
 
